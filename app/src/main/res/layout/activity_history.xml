@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".history">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="68dp"
+        android:gravity="center"
+        android:text="History"
+        android:textSize="32dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="52dp"
+        android:gravity="center"
+        android:text="Best Avg.: "
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:text="Most problems in a section"
+        android:textSize="24dp"
+
+
+        app:layout_constraintTop_toBottomOf="@+id/textViewBestAvarage"
+        tools:layout_editor_absoluteX="173dp" />
+
+    <TextView
+        android:id="@+id/textViewBestAvarage"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:text="0"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textViewMostProblems"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:text="0"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:layout_editor_absoluteX="174dp" />
+
+    <ScrollView
+        android:id="@+id/scrow"
+        android:layout_width="378dp"
+        android:layout_height="325dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMostProblems">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

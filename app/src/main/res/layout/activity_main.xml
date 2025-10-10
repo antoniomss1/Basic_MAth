@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textViewAppName"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="Basic MAth"
+        android:textSize="32dp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewMainMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:text="Main Menu"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAppName" />
+
+    <Button
+        android:id="@+id/buttonPlayTyping"
+        android:layout_width="34mm"
+        android:layout_height="54dp"
+        android:layout_marginTop="60dp"
+        android:text="Play typing"
+        android:textSize="25dp"
+        android:onClick="startTypingMode"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMainMenu" />
+
+    <Button
+        android:id="@+id/buttonZenMode"
+        android:layout_width="34mm"
+        android:layout_height="54dp"
+        android:layout_marginTop="60dp"
+        android:text="Zen Mode"
+        android:textSize="25dp"
+        android:onClick="zenMode"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPlayTyping" />
+
+    <Button
+        android:id="@+id/buttonHistory"
+        android:layout_width="34mm"
+        android:layout_height="54dp"
+        android:layout_marginTop="60dp"
+        android:text="History"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonZenMode" />
+
+    <Button
+        android:id="@+id/buttonSettings"
+        android:layout_width="34mm"
+        android:layout_height="54dp"
+        android:layout_marginTop="60dp"
+        android:text="Settings"
+        android:textSize="25dp"
+        android:onClick="enterSettings"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHistory" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
