@@ -30,6 +30,7 @@ public class typePractice extends AppCompatActivity {
 
     private Button[] keyBoard = new Button[12];
     private Switch switchHM;
+    private Switch switchPercentage;
     private TextView TVcounterWrongs, TVcounterRight, TVavarageTime;
 
     private int count=0;
@@ -56,6 +57,7 @@ public class typePractice extends AppCompatActivity {
         chalange = findViewById(R.id.textView);
         answerTEXT = findViewById(R.id.textViewAnswer);
         switchHM = findViewById(R.id.switch3);
+        switchPercentage = findViewById(R.id.switchPercentage);
         TVavarageTime = findViewById(R.id.textViewAvarageTime);
 
         keyBoard[0] = findViewById(R.id.button0);
@@ -144,6 +146,32 @@ public class typePractice extends AppCompatActivity {
 
 
     }
+
+    public void newChalangePercentage(){
+        Random random = new Random();
+        chooser = 0;
+
+        a = random.nextInt(200);
+        b = random.nextInt(100);
+        a++; b++;
+        string = a+" % de "+b +" =";
+        float fa = a;
+        float fb = b;
+        System.out.println("NEW CAHLANGE \n\n\n\n\n\n");
+        System.out.println("a = "+a);
+        System.out.println("fa = "+fa);
+        System.out.println("b = "+b);
+        System.out.println("fb = "+fb);
+        System.out.println("fa*fb= "+fa*fb);
+        System.out.println("fa*fb/100= "+fa*fb/100);
+        System.out.println("(int)fa*fb/100= "+(int)(fa*fb/100));
+//        System.out.println("(int)fa*fb/100= "+(int)(fa*fb)/100);
+        ans = (int)(fa*fb/100);
+        System.out.println("ans: "+ans);
+        operation = '%';
+        chalange.setText(string);
+    }
+
     public void showAnswer(){
         int asw;
 
@@ -193,6 +221,12 @@ public class typePractice extends AppCompatActivity {
                 if(Integer.parseInt(text) == a * b){
                     return true;
                 }
+            case('%'):
+                float fa = a;
+                float fb = b;
+                if(Integer.parseInt(text) == (int)(fa*fb/100)){
+                    return true;
+                }
                 break;
         }
 //        if(text.length() >1){
@@ -227,11 +261,16 @@ public class typePractice extends AppCompatActivity {
                     return;
                 }
 
-                if(switchHM.isChecked()){
-                    newChalange(9);
+                if (switchPercentage.isChecked()){
+                    newChalangePercentage();
                 }
                 else{
-                    easyNewChalange(9);
+                    if(switchHM.isChecked()){
+                        newChalange(9);
+                    }
+                    else{
+                        easyNewChalange(9);
+                    }
                 }
 
                 startTime = System.currentTimeMillis();
@@ -262,11 +301,16 @@ public class typePractice extends AppCompatActivity {
                 numberClicked(text);
                 if(checkAnswer()) {
                     showAnswer();
-                    if(switchHM.isChecked()){
-                        newChalange(9);
+                    if (switchPercentage.isChecked()){
+                        newChalangePercentage();
                     }
                     else{
-                        easyNewChalange(9);
+                        if(switchHM.isChecked()){
+                            newChalange(9);
+                        }
+                        else{
+                            easyNewChalange(9);
+                        }
                     }
                     endTime = System.currentTimeMillis();
                     long took = endTime - startTime;

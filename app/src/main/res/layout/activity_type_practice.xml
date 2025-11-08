@@ -181,11 +181,11 @@
             android:orientation="horizontal">
 
             <Button
-                android:backgroundTint="#F1331F"
                 android:id="@+id/buttonCLEAR"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:backgroundTint="#F1331F"
                 android:onClick="click"
                 android:tag="C"
                 android:text="C"
@@ -202,16 +202,16 @@
                 android:textSize="32dp" />
 
             <Button
-                android:visibility="invisible"
-                android:backgroundTint="#F1331F"
                 android:id="@+id/buttonDEL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:backgroundTint="#F1331F"
                 android:onClick="click"
                 android:tag="E"
                 android:text="Enter"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 
@@ -282,6 +282,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/switch3"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Switch
+        android:id="@+id/switchPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="%"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/switch3"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 

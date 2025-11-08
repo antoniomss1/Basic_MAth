@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTypingMode(View v){
         Intent intent = new Intent(MainActivity.this, typePractice.class);
+
         startActivity(intent);
     }
 
