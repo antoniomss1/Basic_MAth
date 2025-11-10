@@ -1,14 +1,7 @@
-package com.example.basicmath;
+package com.example.basicmath.activities;
 
-import static com.google.android.material.internal.ViewUtils.dpToPx;
-
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +10,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class history extends AppCompatActivity {
+import com.example.basicmath.R;
+
+public class historyActivity extends AppCompatActivity {
 
     LinearLayout scrollV;
     TextView tv;

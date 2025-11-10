@@ -1,4 +1,4 @@
-package com.example.basicmath;
+package com.example.basicmath.activities;
 
 
 import android.content.Intent;
@@ -18,11 +18,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import com.example.basicmath.R;
+
 import java.util.Random;
 
-public class typePractice extends AppCompatActivity {
+public class typePracticeActivity extends AppCompatActivity {
 
 
     private TextView chalange, answerTEXT;
@@ -391,7 +391,7 @@ public class typePractice extends AppCompatActivity {
 
         System.out.println("intent:");
 
-        Intent intent = new Intent(typePractice.this, history.class);
+        Intent intent = new Intent(typePracticeActivity.this, historyActivity.class);
         intent.putExtra("precision", precision);
         intent.putExtra("avg", avg);
         intent.putExtra("quant", quantProblemas);

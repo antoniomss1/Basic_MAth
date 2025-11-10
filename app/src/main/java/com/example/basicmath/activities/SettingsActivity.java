@@ -1,4 +1,4 @@
-package com.example.basicmath;
+package com.example.basicmath.activities;
 
 import android.os.Bundle;
 
@@ -8,7 +8,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Settings extends AppCompatActivity {
+import com.example.basicmath.R;
+
+public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

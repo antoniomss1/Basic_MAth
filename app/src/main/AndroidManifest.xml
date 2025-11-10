@@ -12,19 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BasicMAth">
         <activity
-            android:name=".Settings"
+            android:name=".activities.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".history"
+            android:name=".activities.historyActivity"
             android:exported="false" />
         <activity
             android:name=".zenMode"
             android:exported="false" />
         <activity
-            android:name=".typePractice"
+            android:name=".activities.typePracticeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
