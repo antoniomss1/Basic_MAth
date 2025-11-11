@@ -238,6 +238,7 @@ public class typePracticeActivity extends AppCompatActivity {
 
 //        btnCounter++;
         String oldT, newT;
+        System.out.println("antes e depois");
         oldT = answerTEXT.getText().toString();
         newT = oldT+number;
         answerTEXT.setText(newT);
@@ -248,7 +249,8 @@ public class typePracticeActivity extends AppCompatActivity {
         String text;
         text = v.getTag().toString();
         System.out.println("text = "+text);
-        if(answerTEXT.length()>=2){
+        System.out.println("answer text: "+answerTEXT.getText());
+        if(answerTEXT.length()>=3){
             answerTEXT.setText("");
             return;
         }
@@ -335,7 +337,7 @@ public class typePracticeActivity extends AppCompatActivity {
                         }
 
                     }
-                    else if(chalange.getText().toString().equals("") == false){
+                    else if(chalange.getText().toString().equals("") == false && answerTEXT.getText().length() == Math.floor(Math.log10(ans)+1)){
                         updatePointBoxes(false);
                         answerTEXT.setText("");
                     }
