@@ -224,7 +224,7 @@ public class typePracticeActivity extends AppCompatActivity {
             case('%'):
                 float fa = a;
                 float fb = b;
-                if(Integer.parseInt(text) == (int)(fa*fb/100)){
+                if(Integer.parseInt(text) == Math.round(fa*fb/100)){
                     return true;
                 }
                 break;
