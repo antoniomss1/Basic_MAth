@@ -3,7 +3,16 @@ package com.example.basicmath.models;
 public class Problem {
     private int leftTerm;
     private int rightTerm;
-    private char operation;
+    private Operation operation;
+
+
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operation operation) {
+        this.operation = operation;
+    }
     private int answer;
 
     public int getAnswer() {
@@ -30,11 +39,5 @@ public class Problem {
         this.rightTerm = rightTerm;
     }
 
-    public char getOperation() {
-        return operation;
-    }
 
-    public void setOperation(char operation) {
-        this.operation = operation;
-    }
 }
