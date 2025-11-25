@@ -19,6 +19,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.basicmath.R;
+import com.example.basicmath.environment.Settings;
+import com.example.basicmath.environment.SettingsPreferences;
 
 import java.util.Random;
 
@@ -29,8 +31,6 @@ public class typePracticeActivity extends AppCompatActivity {
     public String string;
 
     private Button[] keyBoard = new Button[12];
-    private Switch switchHM;
-    private Switch switchPercentage;
     private TextView TVcounterWrongs, TVcounterRight, TVavarageTime;
 
     private int count=0;
@@ -42,6 +42,11 @@ public class typePracticeActivity extends AppCompatActivity {
     long timeSum=0;
     int denominator=0;
     private int ans;
+
+    private Boolean hardMode;
+    private Boolean percentageMode;
+    private SettingsPreferences settingsPreferences;
+    private Settings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +61,7 @@ public class typePracticeActivity extends AppCompatActivity {
 
         chalange = findViewById(R.id.textView);
         answerTEXT = findViewById(R.id.textViewAnswer);
-        switchHM = findViewById(R.id.switch3);
-        switchPercentage = findViewById(R.id.switchPercentage);
+
         TVavarageTime = findViewById(R.id.textViewAvarageTime);
 
         keyBoard[0] = findViewById(R.id.button0);
@@ -76,6 +80,22 @@ public class typePracticeActivity extends AppCompatActivity {
         TVcounterWrongs = findViewById(R.id.textViewWrongAnswers);
         TVcounterRight = findViewById(R.id.textViewRightAnswers);
 
+        settingsPreferences = new SettingsPreferences(this);
+        System.out.println("VAI PEGAR SETTINGS");
+        settings = settingsPreferences.getSettings();
+        System.out.println("PEGOU SETTINGS: "+ settings.toString());
+        applySettings(settings);
+    }
+
+    private void applySettings(Settings settings) {
+        System.out.println("APLICANDO SEETINGS");
+        System.out.println("settings: "+settings.toString());
+
+//        switchHM.setChecked(settings.getHardMode());
+//        switchPercentage.setChecked(settings.getPercentageMode());
+        hardMode = settings.getHardMode();
+        percentageMode = settings.getPercentageMode();
+        System.out.println("SETOU CHECKEDS");
     }
 
     public void reset(View v){
@@ -203,7 +223,7 @@ public class typePracticeActivity extends AppCompatActivity {
     }
     public boolean checkAnswer(){
         String text = answerTEXT.getText().toString();
-        if(text.equals("")){
+        if(text.isEmpty()){
             return false;
         }
         switch (operation){
@@ -263,11 +283,11 @@ public class typePracticeActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (switchPercentage.isChecked()){
+                if (percentageMode){
                     newChalangePercentage();
                 }
                 else{
-                    if(switchHM.isChecked()){
+                    if(hardMode){
                         newChalange(9);
                     }
                     else{
@@ -303,11 +323,11 @@ public class typePracticeActivity extends AppCompatActivity {
                 numberClicked(text);
                 if(checkAnswer()) {
                     showAnswer();
-                    if (switchPercentage.isChecked()){
+                    if (percentageMode){
                         newChalangePercentage();
                     }
                     else{
-                        if(switchHM.isChecked()){
+                        if(hardMode){
                             newChalange(9);
                         }
                         else{
@@ -350,7 +370,7 @@ public class typePracticeActivity extends AppCompatActivity {
 
     public void nextBTN(){
         if (count % 2 == 0) {
-            if(switchHM.isChecked()){
+            if(hardMode){
                 newChalange(9);
             }
             else{
