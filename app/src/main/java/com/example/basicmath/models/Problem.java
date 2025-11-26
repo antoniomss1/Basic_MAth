@@ -5,6 +5,12 @@ public class Problem {
     private int rightTerm;
     private Operation operation;
 
+    public Problem(int leftTerm, int rightTerm, Operation operation, int answer) {
+        this.leftTerm = leftTerm;
+        this.rightTerm = rightTerm;
+        this.operation = operation;
+        this.answer = answer;
+    }
 
     public Operation getOperation() {
         return operation;
