@@ -21,6 +21,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.basicmath.R;
 import com.example.basicmath.environment.Settings;
 import com.example.basicmath.environment.SettingsPreferences;
+import com.example.basicmath.models.Operation;
+import com.example.basicmath.models.Problem;
+import com.example.basicmath.utils.ProblemGenerator;
 
 import java.util.Random;
 
@@ -168,30 +171,30 @@ public class typePracticeActivity extends AppCompatActivity {
     }
 
     public void newChalangePercentage(){
-        Random random = new Random();
-        chooser = 0;
-
-        a = random.nextInt(200);
-        b = random.nextInt(100);
-        a++; b++;
-        string = a+" % de "+b +" =";
-        float fa = a;
-        float fb = b;
-        System.out.println("NEW CAHLANGE \n\n\n\n\n\n");
-        System.out.println("a = "+a);
-        System.out.println("fa = "+fa);
-        System.out.println("b = "+b);
-        System.out.println("fb = "+fb);
-        System.out.println("fa*fb= "+fa*fb);
-        System.out.println("fa*fb/100= "+fa*fb/100);
-        System.out.println("(int)fa*fb/100= "+(int)(fa*fb/100));
-//        System.out.println("(int)fa*fb/100= "+(int)(fa*fb)/100);
-        ans = (int)(fa*fb/100);
-        System.out.println("ans: "+ans);
+//        Random random = new Random();
+//        chooser = 0;
+//
+//        a = random.nextInt(200);
+//        b = random.nextInt(100);
+//        a++; b++;
+//        float fa = a;
+//        float fb = b;
+//        ans = (int)(fa*fb/100);
+//        System.out.println("ans: "+ans);
+//        operation = '%';
+        Problem problem = ProblemGenerator.generateProblem(Operation.PERCENTAGE, settings);
+//        String a = String.valueOf(problem.getLeftTerm());
+//        String b = String.valueOf(problem.getRightTerm());
+        a = problem.getLeftTerm();
+        b = problem.getRightTerm();
+        ans = problem.getAnswer();
         operation = '%';
+        System.out.println("Problema: "+problem.toString());
+        string = a+" % de "+b +" =";
+
         chalange.setText(string);
     }
-
+//
     public void showAnswer(){
         int asw;
 
@@ -277,8 +280,6 @@ public class typePracticeActivity extends AppCompatActivity {
 
         switch(text){
             case ("E"):
-//                checkAnswer();
-//                if (count % 2 == 0) {
                 if(chalange.getText().equals("")==false){
                     return;
                 }
@@ -368,19 +369,19 @@ public class typePracticeActivity extends AppCompatActivity {
 //        showAnswer();
     }
 
-    public void nextBTN(){
-        if (count % 2 == 0) {
-            if(hardMode){
-                newChalange(9);
-            }
-            else{
-                easyNewChalange(9);
-            }
-        } else {
-            showAnswer();
-        }
-        count++;
-    }
+//    public void nextBTN(){
+//        if (count % 2 == 0) {
+//            if(hardMode){
+//                newChalange(9);
+//            }
+//            else{
+//                easyNewChalange(9);
+//            }
+//        } else {
+//            showAnswer();
+//        }
+//        count++;
+//    }
 
     public void updatePointBoxes(boolean b){
         if (b){
