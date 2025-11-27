@@ -1,6 +1,9 @@
 package com.example.basicmath.utils;
 
 import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.basicmath.environment.Settings;
 import com.example.basicmath.models.Operation;
@@ -37,15 +40,21 @@ public final class ProblemGenerator {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     public static Problem generateHardProblem(Settings settings){
         left = settings.tableStart;
         right = settings.tableEnd;
         Random c = new Random();
-        switch (c.nextInt() % 2){
+        int val;
+        switch (val = (c.nextInt(1, 15) % 3)){
             case (0):
                 return generateAdditionProblem(left, right*2);
             case (1):
                 return generateMultiplicationProblem(left, right);
+            case (2):
+                return generateSubtractionProblem(left, right);
+            default:
+                System.out.println("val = " + val);
         }
         System.out.println("QUEEEEEEEEE???????");
         return null;
@@ -75,6 +84,7 @@ public final class ProblemGenerator {
         b += left;
         int ans = a*b;
         Problem problem = new Problem(a, b, Operation.MULTIPLICATION, ans);
+        System.out.println("problema gerado: "+problem.toString());
         return problem;
     }
     private static Problem generateSubtractionProblem(int left, int right ){
@@ -85,7 +95,24 @@ public final class ProblemGenerator {
         a++; b++;
         a += left;
         b += left;
-        int ans = Math.abs(a+b);
+//        if(a>b){
+//            string = a+" - "+b +" =";
+//            ans = a-b;
+//            chalange.setText(string);
+//        }
+//        else{
+//            string = b+" - "+ a+" =";
+//            ans = b-a;
+//            chalange.setText(string);
+//        }
+        System.out.println("a b = " + a + " " + b);
+        if (a<b){
+            a = a ^ b;
+            b = a ^ b;
+            a = a ^ b;
+        }
+        System.out.println("a b = " + a + " " + b);
+        int ans = Math.abs(a-b);
         Problem problem = new Problem(a, b, Operation.SUBTRACTION, ans);
         return problem;
     }
@@ -111,4 +138,6 @@ public final class ProblemGenerator {
         else
             return generateMultiplicationProblem(left, right);
     }
+
+
 }

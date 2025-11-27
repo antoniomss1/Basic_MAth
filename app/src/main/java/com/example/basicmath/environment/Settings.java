@@ -1,6 +1,7 @@
 package com.example.basicmath.environment;
 
 public class Settings {
+    //trocar esses boolean pra uma classe enum Modes com os modos
     public Boolean hardMode;
     public Boolean percentageMode;
     public Boolean DateMode;

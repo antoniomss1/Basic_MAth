@@ -46,10 +46,13 @@ public class typePracticeActivity extends AppCompatActivity {
     int denominator=0;
     private int ans;
 
+    //trocar esses "mode" por algo mais geral
     private Boolean hardMode;
     private Boolean percentageMode;
+    private int mode;
     private SettingsPreferences settingsPreferences;
     private Settings settings;
+    Problem currentProblem = new Problem();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,16 +91,24 @@ public class typePracticeActivity extends AppCompatActivity {
         settings = settingsPreferences.getSettings();
         System.out.println("PEGOU SETTINGS: "+ settings.toString());
         applySettings(settings);
+
     }
 
     private void applySettings(Settings settings) {
         System.out.println("APLICANDO SEETINGS");
         System.out.println("settings: "+settings.toString());
 
-//        switchHM.setChecked(settings.getHardMode());
-//        switchPercentage.setChecked(settings.getPercentageMode());
         hardMode = settings.getHardMode();
         percentageMode = settings.getPercentageMode();
+        if(hardMode){
+            mode = 0;
+        } else if (percentageMode) {
+            mode = 1;
+        }
+        else{
+            mode = 2;
+        }
+        System.out.println("mode: "+mode);
         System.out.println("SETOU CHECKEDS");
     }
 
@@ -154,6 +165,37 @@ public class typePracticeActivity extends AppCompatActivity {
 
 
     }
+
+    public void newChalange(){
+
+        Problem problem = new Problem();
+        System.out.println("mode: "+mode);
+        switch (mode){
+            case 0:
+                problem = ProblemGenerator.generateHardProblem(settings);
+                System.out.println("hard problem generated: "+problem.toString());
+                break;
+            case 1:
+                problem = ProblemGenerator.generateProblem(Operation.PERCENTAGE, settings);
+                break;
+            case 2:
+                problem = ProblemGenerator.generateProblem(Operation.MULTIPLICATION, settings);
+        }
+
+//        settings.get;
+        //TEMPORARIO
+        a = problem.getLeftTerm();
+        b = problem.getRightTerm();
+        string = problem.getString();
+        operation = problem.getOldSystemOperation();
+        ans = problem.getAnswer();
+        chalange.setText(string);
+        //TEMPORARIO
+        currentProblem = problem;
+        System.out.println("PROBLEMA GERADO: "+problem.toString());
+        System.out.println("current problem: "+currentProblem.toString());
+
+    }
     public void easyNewChalange(int tabuada){
 
         Random random = new Random();
@@ -193,6 +235,8 @@ public class typePracticeActivity extends AppCompatActivity {
         string = a+" % de "+b +" =";
 
         chalange.setText(string);
+        System.out.println(problem.toString());
+        currentProblem = problem;
     }
 //
     public void showAnswer(){
@@ -226,6 +270,8 @@ public class typePracticeActivity extends AppCompatActivity {
     }
     public boolean checkAnswer(){
         String text = answerTEXT.getText().toString();
+        System.out.println("CHECKING, TEXT = "+text);
+        System.out.println("RESPOSTA: "+currentProblem.toString());
         if(text.isEmpty()){
             return false;
         }
@@ -241,6 +287,7 @@ public class typePracticeActivity extends AppCompatActivity {
                 }
                 break;
             case('X'):
+                System.out.println("text: "+text.toString());
                 if(Integer.parseInt(text) == a * b){
                     return true;
                 }
@@ -284,17 +331,18 @@ public class typePracticeActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (percentageMode){
-                    newChalangePercentage();
-                }
-                else{
-                    if(hardMode){
-                        newChalange(9);
-                    }
-                    else{
-                        easyNewChalange(9);
-                    }
-                }
+//                if (percentageMode){
+//                    newChalangePercentage();
+//                }
+//                else{
+//                    if(hardMode){
+//                        newChalange(9);
+//                    }
+//                    else{
+//                        easyNewChalange(9);
+//                    }
+//                }
+                newChalange();
 
                 startTime = System.currentTimeMillis();
 
@@ -324,17 +372,19 @@ public class typePracticeActivity extends AppCompatActivity {
                 numberClicked(text);
                 if(checkAnswer()) {
                     showAnswer();
-                    if (percentageMode){
-                        newChalangePercentage();
-                    }
-                    else{
-                        if(hardMode){
-                            newChalange(9);
-                        }
-                        else{
-                            easyNewChalange(9);
-                        }
-                    }
+//                    if (percentageMode){
+//                        newChalangePercentage();
+//                    }
+//                    else{
+//                        if(hardMode){
+//                            newChalange(9);
+//                        }
+//                        else{
+//                            easyNewChalange(9);
+//                        }
+//                    }
+                    newChalange();
+
                     endTime = System.currentTimeMillis();
                     long took = endTime - startTime;
                     timeSum += took;

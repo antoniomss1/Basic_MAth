@@ -12,6 +12,8 @@ public class Problem {
         this.answer = answer;
     }
 
+    public Problem() {}
+
     public Operation getOperation() {
         return operation;
     }
@@ -45,5 +47,56 @@ public class Problem {
         this.rightTerm = rightTerm;
     }
 
+    public String getString(){
+        String string;
+        switch (this.operation){
+            case ADDITION:
+                string = this.leftTerm+" + "+this.rightTerm +" =";
+                break;
+            case PERCENTAGE:
+                string = this.leftTerm+"% de "+this.rightTerm +" =";
+                break;
+            case SUBTRACTION:
+                string = this.leftTerm+" - "+this.rightTerm +" =";
+                break;
+            case MULTIPLICATION:
+                string = this.leftTerm+" x "+this.rightTerm +" =";
+                break;
+            default:
+                return "there is some error";
+        }
+        return string;
+    }
 
+    public char getOldSystemOperation(){
+        char string;
+        switch (this.operation){
+            case ADDITION:
+                string = '+';
+                break;
+            case PERCENTAGE:
+                string = '%';
+                break;
+            case SUBTRACTION:
+                string = '-';
+                break;
+            case MULTIPLICATION:
+                string = 'X';
+                break;
+            default:
+                return 'e';
+        }
+        return string;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "leftTerm=" + leftTerm +
+                ", rightTerm=" + rightTerm +
+                ", operation=" + operation +
+                ", answer=" + answer +
+                '}';
+    }
 }
