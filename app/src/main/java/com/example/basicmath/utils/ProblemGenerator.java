@@ -60,6 +60,27 @@ public final class ProblemGenerator {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    public static Problem newChalange(int mode, Settings settings){
+
+        Problem problem = new Problem();
+        System.out.println("mode: "+mode);
+        switch (mode){
+            case 0:
+                problem = generateHardProblem(settings);
+                System.out.println("hard problem generated: "+problem.toString());
+                break;
+            case 1:
+                problem = ProblemGenerator.generateProblem(Operation.PERCENTAGE, settings);
+                break;
+            case 2:
+                problem = ProblemGenerator.generateProblem(Operation.MULTIPLICATION, settings);
+        }
+
+        System.out.println("PROBLEMA GERADO: "+problem.toString());
+        System.out.println("QUE? NULL!");
+        return problem;
+    }
     //Sometimes problems might be preselected...
     private static Problem generateAdditionProblem(int left, int right ){
 
@@ -107,6 +128,7 @@ public final class ProblemGenerator {
 //        }
         System.out.println("a b = " + a + " " + b);
         if (a<b){
+            //troca valores
             a = a ^ b;
             b = a ^ b;
             a = a ^ b;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:tag="E"
-    android:onClick="click"
+    android:onClick="enterClicked"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.typePracticeActivity">
@@ -177,7 +177,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="#F1331F"
-                android:onClick="click"
+                android:onClick="clearText"
                 android:tag="C"
                 android:text="C"
                 android:textSize="32dp" />

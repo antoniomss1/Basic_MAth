@@ -1,8 +1,11 @@
 package com.example.basicmath.activities;
 
 
+import static com.example.basicmath.utils.ProblemUtils.checkAnswer;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,6 +16,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -24,6 +28,7 @@ import com.example.basicmath.environment.SettingsPreferences;
 import com.example.basicmath.models.Operation;
 import com.example.basicmath.models.Problem;
 import com.example.basicmath.utils.ProblemGenerator;
+import com.example.basicmath.utils.ProblemUtils;
 
 import java.util.Random;
 
@@ -33,7 +38,6 @@ public class typePracticeActivity extends AppCompatActivity {
     private TextView chalange, answerTEXT;
     public String string;
 
-    private Button[] keyBoard = new Button[12];
     private TextView TVcounterWrongs, TVcounterRight, TVavarageTime;
 
     private int count=0;
@@ -70,18 +74,6 @@ public class typePracticeActivity extends AppCompatActivity {
 
         TVavarageTime = findViewById(R.id.textViewAvarageTime);
 
-        keyBoard[0] = findViewById(R.id.button0);
-        keyBoard[1] = findViewById(R.id.button1);
-        keyBoard[2] = findViewById(R.id.button2);
-        keyBoard[3] = findViewById(R.id.button3);
-        keyBoard[4] = findViewById(R.id.button4);
-        keyBoard[5] = findViewById(R.id.button5);
-        keyBoard[6] = findViewById(R.id.button6);
-        keyBoard[7] = findViewById(R.id.button7);
-        keyBoard[8] = findViewById(R.id.button8);
-        keyBoard[9] = findViewById(R.id.button9);
-        keyBoard[10] = findViewById(R.id.buttonDEL);
-        keyBoard[11] = findViewById(R.id.buttonCLEAR);
 
         TVcounterWrongs = findViewById(R.id.textViewWrongAnswers);
         TVcounterRight = findViewById(R.id.textViewRightAnswers);
@@ -98,16 +90,9 @@ public class typePracticeActivity extends AppCompatActivity {
         System.out.println("APLICANDO SEETINGS");
         System.out.println("settings: "+settings.toString());
 
-        hardMode = settings.getHardMode();
-        percentageMode = settings.getPercentageMode();
-        if(hardMode){
-            mode = 0;
-        } else if (percentageMode) {
-            mode = 1;
-        }
-        else{
-            mode = 2;
-        }
+
+        this.mode = settings.getMode();
+
         System.out.println("mode: "+mode);
         System.out.println("SETOU CHECKEDS");
     }
@@ -125,188 +110,8 @@ public class typePracticeActivity extends AppCompatActivity {
         TVcounterWrongs.setText("0");
     }
 
-    public void newChalange(int tabuada){
-
-        Random random = new Random();
-
-        chooser = random.nextInt(3);
-        a = random.nextInt(19);
-        b = random.nextInt(19);
-        a++; b++;
-        switch (chooser){
-            case 0:
-                a = (a%tabuada)+1;
-                b = (b%tabuada) +1;
-                string = a+" x "+b +" =";
-                operation = 'X';
-                ans = a*b;
-                chalange.setText(string);
-                break;
-            case 1:
-                string = a+" + "+b +" =";
-                operation = '+';
-                chalange.setText(string);
-                ans = a+b;
-                break;
-            case 2:
-                if(a>b){
-                    string = a+" - "+b +" =";
-                    ans = a-b;
-                    chalange.setText(string);
-                }
-                else{
-                    string = b+" - "+ a+" =";
-                    ans = b-a;
-                    chalange.setText(string);
-                }
-                operation = '-';
-                break;
-        }
-
-
-    }
-
-    public void newChalange(){
-
-        Problem problem = new Problem();
-        System.out.println("mode: "+mode);
-        switch (mode){
-            case 0:
-                problem = ProblemGenerator.generateHardProblem(settings);
-                System.out.println("hard problem generated: "+problem.toString());
-                break;
-            case 1:
-                problem = ProblemGenerator.generateProblem(Operation.PERCENTAGE, settings);
-                break;
-            case 2:
-                problem = ProblemGenerator.generateProblem(Operation.MULTIPLICATION, settings);
-        }
-
-//        settings.get;
-        //TEMPORARIO
-        a = problem.getLeftTerm();
-        b = problem.getRightTerm();
-        string = problem.getString();
-        operation = problem.getOldSystemOperation();
-        ans = problem.getAnswer();
-        chalange.setText(string);
-        //TEMPORARIO
-        currentProblem = problem;
-        System.out.println("PROBLEMA GERADO: "+problem.toString());
-        System.out.println("current problem: "+currentProblem.toString());
-
-    }
-    public void easyNewChalange(int tabuada){
-
-        Random random = new Random();
-        chooser = 0;
-
-        a = random.nextInt(tabuada);
-        b = random.nextInt(tabuada);
-        a++; b++;
-        string = a+" x "+b +" =";
-        ans = a*b;
-        operation = 'X';
-        chalange.setText(string);
-
-
-    }
-
-    public void newChalangePercentage(){
-//        Random random = new Random();
-//        chooser = 0;
-//
-//        a = random.nextInt(200);
-//        b = random.nextInt(100);
-//        a++; b++;
-//        float fa = a;
-//        float fb = b;
-//        ans = (int)(fa*fb/100);
-//        System.out.println("ans: "+ans);
-//        operation = '%';
-        Problem problem = ProblemGenerator.generateProblem(Operation.PERCENTAGE, settings);
-//        String a = String.valueOf(problem.getLeftTerm());
-//        String b = String.valueOf(problem.getRightTerm());
-        a = problem.getLeftTerm();
-        b = problem.getRightTerm();
-        ans = problem.getAnswer();
-        operation = '%';
-        System.out.println("Problema: "+problem.toString());
-        string = a+" % de "+b +" =";
-
-        chalange.setText(string);
-        System.out.println(problem.toString());
-        currentProblem = problem;
-    }
-//
-    public void showAnswer(){
-        int asw;
-
-        switch (chooser){
-            case 0:
-                asw = a*b;
-                string = a+" x "+b +" = "+asw;
-                chalange.setText(string);
-                break;
-            case 1:
-                asw = a+b;
-                string = a+" + "+b +" = "+asw;
-                chalange.setText(string);
-                break;
-            case 2:
-                if(a>b){
-                    asw = a-b;
-                    string = a+" - "+b +" = "+asw;
-                    chalange.setText(string);
-                }
-                else{
-                    asw = b-a;
-                    string = b+" - "+ a+" = "+asw;
-                    chalange.setText(string);
-                }
-                break;
-        }
-
-    }
-    public boolean checkAnswer(){
-        String text = answerTEXT.getText().toString();
-        System.out.println("CHECKING, TEXT = "+text);
-        System.out.println("RESPOSTA: "+currentProblem.toString());
-        if(text.isEmpty()){
-            return false;
-        }
-        switch (operation){
-            case ('+'):
-                if (Integer.parseInt(text) == a + b){
-                    return true;
-                }
-                break;
-            case ('-'):
-                if (Integer.parseInt(text) == (a - b) || Integer.parseInt(text) == (b - a) ){
-                    return true;
-                }
-                break;
-            case('X'):
-                System.out.println("text: "+text.toString());
-                if(Integer.parseInt(text) == a * b){
-                    return true;
-                }
-            case('%'):
-                float fa = a;
-                float fb = b;
-                if(Integer.parseInt(text) == Math.round(fa*fb/100)){
-                    return true;
-                }
-                break;
-        }
-//        if(text.length() >1){
-        return false;
-//        }
-//        return true;
-    }
     public void numberClicked(String number){
 
-//        btnCounter++;
         String oldT, newT;
         System.out.println("antes e depois");
         oldT = answerTEXT.getText().toString();
@@ -314,124 +119,58 @@ public class typePracticeActivity extends AppCompatActivity {
         answerTEXT.setText(newT);
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     public void click(View v){
         System.out.println("clicked");
         String text;
         text = v.getTag().toString();
         System.out.println("text = "+text);
         System.out.println("answer text: "+answerTEXT.getText());
-        if(answerTEXT.length()>=3){
+
+        numberClicked(text);
+        if(checkAnswer(currentProblem, answerTEXT)) {
+
+            currentProblem = ProblemGenerator.newChalange(mode, settings);
+            a = currentProblem.getLeftTerm();
+            b = currentProblem.getRightTerm();
+            string = currentProblem.getString();
+            operation = currentProblem.getOldSystemOperation();
+            ans = currentProblem.getAnswer();
+            chalange.setText(string);
+
+            //reseta contagem do tempo ao acertar resposta
+            endTime = System.currentTimeMillis();
+            long took = endTime - startTime;
+            timeSum += took;
+            denominator++;
+            double avarage = timeSum/denominator;
+            System.out.println(avarage);
+            avarage = avarage/1000;
+            System.out.println(avarage);
+
+            TVavarageTime.setText("Avg. = "+avarage);
+
+            //reinicia bem no final do anterior
+            startTime = endTime;
             answerTEXT.setText("");
-            return;
+            updatePointBoxes(true);
         }
-
-        switch(text){
-            case ("E"):
-                if(chalange.getText().equals("")==false){
-                    return;
-                }
-
-//                if (percentageMode){
-//                    newChalangePercentage();
-//                }
-//                else{
-//                    if(hardMode){
-//                        newChalange(9);
-//                    }
-//                    else{
-//                        easyNewChalange(9);
-//                    }
-//                }
-                newChalange();
-
-                startTime = System.currentTimeMillis();
-
-
-                if(answerTEXT.getText().equals("")){
-                    return;
-                }
-                if(answerTEXT.getText().length()==1){
-                    return;
-                }
-
-                if(checkAnswer()) {
-                    showAnswer();
-                    updatePointBoxes(true);
-                }
-                else{
-                    showAnswer();
+        else{
+            if(answerTEXT.getText().length() == 1 && chalange.getText().toString().equals("") == false){
+                if(ans-9<=0){
                     updatePointBoxes(false);
-                }
-                answerTEXT.setText("");
-                count++;
-                break;
-            case ("C"):
-                answerTEXT.setText("");
-                break;
-            default:
-                numberClicked(text);
-                if(checkAnswer()) {
-                    showAnswer();
-//                    if (percentageMode){
-//                        newChalangePercentage();
-//                    }
-//                    else{
-//                        if(hardMode){
-//                            newChalange(9);
-//                        }
-//                        else{
-//                            easyNewChalange(9);
-//                        }
-//                    }
-                    newChalange();
-
-                    endTime = System.currentTimeMillis();
-                    long took = endTime - startTime;
-                    timeSum += took;
-                    denominator++;
-                    double avarage = timeSum/denominator;
-                    System.out.println(avarage);
-                    avarage = avarage/1000;
-                    System.out.println(avarage);
-
-                    TVavarageTime.setText("Avg. = "+avarage);
-
-                    startTime = endTime;
                     answerTEXT.setText("");
-                    updatePointBoxes(true);
                 }
-                else{
-                    if(answerTEXT.getText().length() == 1 && chalange.getText().toString().equals("") == false){
-                        if(ans-9<=0){
-                            updatePointBoxes(false);
-                            answerTEXT.setText("");
-                        }
 
-                    }
-                    else if(chalange.getText().toString().equals("") == false && answerTEXT.getText().length() == Math.floor(Math.log10(ans)+1)){
-                        updatePointBoxes(false);
-                        answerTEXT.setText("");
-                    }
-                }
-                break;
+            }
+            else if(chalange.getText().toString().equals("") == false && answerTEXT.getText().length() == Math.floor(Math.log10(ans)+1)){
+                updatePointBoxes(false);
+                answerTEXT.setText("");
+            }
         }
 
-//        showAnswer();
-    }
 
-//    public void nextBTN(){
-//        if (count % 2 == 0) {
-//            if(hardMode){
-//                newChalange(9);
-//            }
-//            else{
-//                easyNewChalange(9);
-//            }
-//        } else {
-//            showAnswer();
-//        }
-//        count++;
-//    }
+    }
 
     public void updatePointBoxes(boolean b){
         if (b){
@@ -458,7 +197,7 @@ public class typePracticeActivity extends AppCompatActivity {
 
     public void endSection(View v){
         System.out.println("qui0");
-        double precision = (double) rigthAnswers /(wrongAnsers+rigthAnswers),
+        double  precision = (double) rigthAnswers /(wrongAnsers+rigthAnswers),
                 avg = (double) timeSum /denominator;
         int quantProblemas = denominator;
 
@@ -474,13 +213,41 @@ public class typePracticeActivity extends AppCompatActivity {
 
         SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
         SharedPreferences.Editor editor = settings.edit();
-//        editor.putInt("quantidade ", quantProblemas);
 
-        // Apply the edits!
         editor.apply();
 
         startActivity(intent);
     }
 
 
+    public void clearText(View view) {
+        answerTEXT.setText("");
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    public void enterClicked(View view) {
+        if(chalange.getText().equals("")==false) return;
+
+        currentProblem = ProblemGenerator.newChalange(mode, settings);
+        a = currentProblem.getLeftTerm();
+        b = currentProblem.getRightTerm();
+        string = currentProblem.getString();
+        operation = currentProblem.getOldSystemOperation();
+        ans = currentProblem.getAnswer();
+        chalange.setText(string);
+
+        //começa a contagem do tempo
+        startTime = System.currentTimeMillis();
+
+        if(answerTEXT.getText().isEmpty()){
+            return;
+        }
+        if(answerTEXT.getText().length()==1){
+            return;
+        }
+
+        answerTEXT.setText("");
+        count++;
+
+    }
 }

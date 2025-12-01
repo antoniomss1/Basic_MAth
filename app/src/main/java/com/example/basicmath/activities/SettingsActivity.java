@@ -56,16 +56,27 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void applyPreferences() {
         System.out.println("APLY PREFERENCES");
-        Boolean h = switchHardMode.isChecked();
-        Boolean d = switchDateMode.isChecked();
-        Boolean p = switchPercentage.isChecked();
+        Boolean h = switchHardMode.isChecked();//0
+        Boolean d = switchDateMode.isChecked();//1
+        Boolean p = switchPercentage.isChecked();//2
+
+        int mode = 0;
+
+        if(h){
+            mode = 0;
+        } else if (p) {
+            mode = 1;
+        }
+        else{
+            mode = 2;
+        }
 
         System.out.println("3 primeiros: "+h.toString()+" "+d.toString()+" "+p.toString());
         int beg = Integer.parseInt(preferedTableStart.getText().toString());
         int end = Integer.parseInt(preferedTableEnd.getText().toString());
         System.out.println("beg: "+beg);
         System.out.println("end: "+end);
-        Settings settings = new Settings(h, p, d, beg, end);
+        Settings settings = new Settings(mode, beg, end);
         System.out.println("SETTINGS: "+settings.toString());
 
         settingsPreferences.saveSettings(settings);
