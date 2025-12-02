@@ -1,8 +1,9 @@
-package com.example.basicmath.models;
+package com.example.basicmath.utils;
 
 public enum Operation {
     MULTIPLICATION,
     ADDITION,
     SUBTRACTION,
-    PERCENTAGE
+    PERCENTAGE,
+    DIVISION
 }

@@ -1,12 +1,10 @@
 package com.example.basicmath.utils;
 
-import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.basicmath.environment.Settings;
-import com.example.basicmath.models.Operation;
 import com.example.basicmath.models.Problem;
 
 import java.util.Random;
@@ -33,6 +31,8 @@ public final class ProblemGenerator {
             case PERCENTAGE:
                 return generatePercentageProblem(left, right);
 
+            case DIVISION:
+                return generateIntDivisionProblem(left, right);
             default:
 //                throw new IllegalArgumentException("Unsupported operation: " + operation);
                 System.out.println("OPERAÇÃO DESCONHECIDA (OU NÃO IMPLEMENTADA): "+operation.toString());
@@ -41,18 +41,20 @@ public final class ProblemGenerator {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    public static Problem generateHardProblem(Settings settings){
+    private static Problem generateHardProblem(Settings settings){
         left = settings.tableStart;
         right = settings.tableEnd;
         Random c = new Random();
-        int val;
-        switch (val = (c.nextInt(1, 15) % 3)){
+        int val = (c.nextInt(0, Integer.MAX_VALUE) % 4);
+        switch (val){
             case (0):
                 return generateAdditionProblem(left, right*2);
             case (1):
                 return generateMultiplicationProblem(left, right);
             case (2):
                 return generateSubtractionProblem(left, right);
+            case (3):
+                return generateIntDivisionProblem(left, right);
             default:
                 System.out.println("val = " + val);
         }
@@ -61,24 +63,26 @@ public final class ProblemGenerator {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    public static Problem newChalange(int mode, Settings settings){
+    public static Problem newChalange(Settings settings){
 
+        Mode mode = settings.getMode();
         Problem problem = new Problem();
         System.out.println("mode: "+mode);
         switch (mode){
-            case 0:
+            case HARD_TABLE:
                 problem = generateHardProblem(settings);
-                System.out.println("hard problem generated: "+problem.toString());
                 break;
-            case 1:
-                problem = ProblemGenerator.generateProblem(Operation.PERCENTAGE, settings);
+            case PERCENTAGE:
+                problem = generateProblem(Operation.PERCENTAGE, settings);
                 break;
-            case 2:
-                problem = ProblemGenerator.generateProblem(Operation.MULTIPLICATION, settings);
+            case TIMES_TABLE:
+                problem = generateProblem(Operation.MULTIPLICATION, settings);
+                break;
+            case DIVISION:
+                problem = generateProblem(Operation.DIVISION, settings);
+                break;
         }
 
-        System.out.println("PROBLEMA GERADO: "+problem.toString());
-        System.out.println("QUE? NULL!");
         return problem;
     }
     //Sometimes problems might be preselected...
@@ -116,16 +120,6 @@ public final class ProblemGenerator {
         a++; b++;
         a += left;
         b += left;
-//        if(a>b){
-//            string = a+" - "+b +" =";
-//            ans = a-b;
-//            chalange.setText(string);
-//        }
-//        else{
-//            string = b+" - "+ a+" =";
-//            ans = b-a;
-//            chalange.setText(string);
-//        }
         System.out.println("a b = " + a + " " + b);
         if (a<b){
             //troca valores
@@ -152,14 +146,23 @@ public final class ProblemGenerator {
         return problem;
     }
 
-    private static Problem getHardModeProblem(int left, int right){
-        Random rand = new Random();
-        int sort = rand.nextInt();
-        if(sort % 2 == 0)
-            return generateAdditionProblem(left, right);
-        else
-            return generateMultiplicationProblem(left, right);
+    private static Problem generateIntDivisionProblem(int left, int right){
+        Random random = new Random();
+        int range = right*10;
+        int a = random.nextInt(range);
+        int b = random.nextInt(19);
+        a++; b++;
+        a += left;
+        b += left;
+        if (a>b){
+            //troca valores
+            a = a ^ b;
+            b = a ^ b;
+            a = a ^ b;
+        }
+        int ans = (b/a);
+        Problem problem = new Problem(b, a, Operation.DIVISION, ans);
+        return problem;
     }
-
 
 }

@@ -1,5 +1,7 @@
 package com.example.basicmath.models;
 
+import com.example.basicmath.utils.Operation;
+
 public class Problem {
     private int leftTerm;
     private int rightTerm;
@@ -62,6 +64,9 @@ public class Problem {
             case MULTIPLICATION:
                 string = this.leftTerm+" x "+this.rightTerm +" =";
                 break;
+            case DIVISION:
+                string = this.leftTerm+" / "+this.rightTerm +" =";
+                break;
             default:
                 return "there is some error";
         }
@@ -82,6 +87,9 @@ public class Problem {
                 break;
             case MULTIPLICATION:
                 string = 'X';
+                break;
+            case DIVISION:
+                string = '/';
                 break;
             default:
                 return 'e';

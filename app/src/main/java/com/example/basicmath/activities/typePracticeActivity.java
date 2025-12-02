@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -25,12 +23,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.basicmath.R;
 import com.example.basicmath.environment.Settings;
 import com.example.basicmath.environment.SettingsPreferences;
-import com.example.basicmath.models.Operation;
 import com.example.basicmath.models.Problem;
+import com.example.basicmath.utils.Mode;
 import com.example.basicmath.utils.ProblemGenerator;
-import com.example.basicmath.utils.ProblemUtils;
-
-import java.util.Random;
 
 public class typePracticeActivity extends AppCompatActivity {
 
@@ -53,7 +48,7 @@ public class typePracticeActivity extends AppCompatActivity {
     //trocar esses "mode" por algo mais geral
     private Boolean hardMode;
     private Boolean percentageMode;
-    private int mode;
+    private Mode mode;
     private SettingsPreferences settingsPreferences;
     private Settings settings;
     Problem currentProblem = new Problem();
@@ -79,9 +74,9 @@ public class typePracticeActivity extends AppCompatActivity {
         TVcounterRight = findViewById(R.id.textViewRightAnswers);
 
         settingsPreferences = new SettingsPreferences(this);
-        System.out.println("VAI PEGAR SETTINGS");
+//        System.out.println("VAI PEGAR SETTINGS");
         settings = settingsPreferences.getSettings();
-        System.out.println("PEGOU SETTINGS: "+ settings.toString());
+//        System.out.println("PEGOU SETTINGS: "+ settings.toString());
         applySettings(settings);
 
     }
@@ -130,7 +125,7 @@ public class typePracticeActivity extends AppCompatActivity {
         numberClicked(text);
         if(checkAnswer(currentProblem, answerTEXT)) {
 
-            currentProblem = ProblemGenerator.newChalange(mode, settings);
+            currentProblem = ProblemGenerator.newChalange(settings);
             a = currentProblem.getLeftTerm();
             b = currentProblem.getRightTerm();
             string = currentProblem.getString();
@@ -196,27 +191,27 @@ public class typePracticeActivity extends AppCompatActivity {
     }
 
     public void endSection(View v){
-        System.out.println("qui0");
-        double  precision = (double) rigthAnswers /(wrongAnsers+rigthAnswers),
-                avg = (double) timeSum /denominator;
-        int quantProblemas = denominator;
-
-        System.out.println("intent:");
-
-        Intent intent = new Intent(typePracticeActivity.this, historyActivity.class);
-        intent.putExtra("precision", precision);
-        intent.putExtra("avg", avg);
-        intent.putExtra("quant", quantProblemas);
-        intent.setAction(Intent.ACTION_SEND);
-
-        System.out.println("action send");
-
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.apply();
-
-        startActivity(intent);
+//        System.out.println("qui0");
+//        double  precision = (double) rigthAnswers /(wrongAnsers+rigthAnswers),
+//                avg = (double) timeSum /denominator;
+//        int quantProblemas = denominator;
+//
+//        System.out.println("intent:");
+//
+//        Intent intent = new Intent(typePracticeActivity.this, historyActivity.class);
+//        intent.putExtra("precision", precision);
+//        intent.putExtra("avg", avg);
+//        intent.putExtra("quant", quantProblemas);
+//        intent.setAction(Intent.ACTION_SEND);
+//
+//        System.out.println("action send");
+//
+//        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
+//        SharedPreferences.Editor editor = settings.edit();
+//
+//        editor.apply();
+//
+//        startActivity(intent);
     }
 
 
@@ -226,9 +221,12 @@ public class typePracticeActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     public void enterClicked(View view) {
+        System.out.println("ENTER CLICKED");
         if(chalange.getText().equals("")==false) return;
 
-        currentProblem = ProblemGenerator.newChalange(mode, settings);
+        System.out.println("VAI CRIAR NOVO PROBLEMA");
+        currentProblem = ProblemGenerator.newChalange(settings);
+        System.out.println("CRIOU: "+ currentProblem.toString());
         a = currentProblem.getLeftTerm();
         b = currentProblem.getRightTerm();
         string = currentProblem.getString();

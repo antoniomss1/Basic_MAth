@@ -1,5 +1,7 @@
 package com.example.basicmath.environment;
 
+import com.example.basicmath.utils.Mode;
+
 public class Settings {
     //trocar esses boolean pra uma classe enum Modes com os modos
 //    public Boolean hardMode;
@@ -8,16 +10,9 @@ public class Settings {
     public int tableStart;
     public int tableEnd;
 
-    public int mode;
-//    public Settings(Boolean hardMode, Boolean percentageMode, Boolean dateMode, int tableStart, int tableEnd) {
-//        this.hardMode = hardMode;
-//        this.percentageMode = percentageMode;
-//        DateMode = dateMode;
-//        this.tableStart = tableStart;
-//        this.tableEnd = tableEnd;
-//    }
+    private Mode mode;
 
-    public Settings(int mode, int tableStart, int tableEnd) {
+    public Settings(Mode mode, int tableStart, int tableEnd) {
         this.mode = mode;
         this.tableStart = tableStart;
         this.tableEnd = tableEnd;
@@ -33,11 +28,11 @@ public class Settings {
     }
 
 
-    public int getMode() {
+    public Mode getMode() {
         return mode;
     }
 
-    public void setMode(int mode) {
+    public void setMode(Mode mode) {
         this.mode = mode;
     }
 
