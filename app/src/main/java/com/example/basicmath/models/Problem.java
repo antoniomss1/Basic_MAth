@@ -1,7 +1,5 @@
 package com.example.basicmath.models;
 
-import com.example.basicmath.utils.Operation;
-
 public class Problem {
     private int leftTerm;
     private int rightTerm;

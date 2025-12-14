@@ -3,8 +3,6 @@ package com.example.basicmath.activities;
 
 import static com.example.basicmath.utils.ProblemUtils.checkAnswer;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +22,7 @@ import com.example.basicmath.R;
 import com.example.basicmath.environment.Settings;
 import com.example.basicmath.environment.SettingsPreferences;
 import com.example.basicmath.models.Problem;
-import com.example.basicmath.utils.Mode;
+import com.example.basicmath.models.Mode;
 import com.example.basicmath.utils.ProblemGenerator;
 
 public class typePracticeActivity extends AppCompatActivity {

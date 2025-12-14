@@ -9,9 +9,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.basicmath.R;
+import com.example.basicmath.models.ModeInfo;
+
+import java.util.ArrayList;
 
 public class ChooseModeActivity extends AppCompatActivity {
 
+    private ArrayList<ModeInfo> specialModes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +26,6 @@ public class ChooseModeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        specialModes = new ArrayList<>();
     }
 }

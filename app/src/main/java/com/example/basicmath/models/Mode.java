@@ -1,4 +1,4 @@
-package com.example.basicmath.utils;
+package com.example.basicmath.models;
 
 public enum Mode {
     TIMES_TABLE,

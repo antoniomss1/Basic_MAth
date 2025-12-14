@@ -5,6 +5,8 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.example.basicmath.environment.Settings;
+import com.example.basicmath.models.Mode;
+import com.example.basicmath.models.Operation;
 import com.example.basicmath.models.Problem;
 
 import java.util.Random;

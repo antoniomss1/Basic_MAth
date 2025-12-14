@@ -1,6 +1,6 @@
 package com.example.basicmath.environment;
 
-import com.example.basicmath.utils.Mode;
+import com.example.basicmath.models.Mode;
 
 public class Settings {
     //trocar esses boolean pra uma classe enum Modes com os modos

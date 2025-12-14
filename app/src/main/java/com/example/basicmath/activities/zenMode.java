@@ -1,4 +1,4 @@
-package com.example.basicmath;
+package com.example.basicmath.activities;
 
 import static com.example.basicmath.utils.ProblemGenerator.newChalange;
 
@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,13 +15,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.basicmath.R;
 import com.example.basicmath.environment.Settings;
 import com.example.basicmath.environment.SettingsPreferences;
 import com.example.basicmath.models.Problem;
-import com.example.basicmath.utils.Mode;
-import com.example.basicmath.utils.ProblemGenerator;
+import com.example.basicmath.models.Mode;
 
-import java.util.Random;
 public class zenMode extends AppCompatActivity {
 
     private TextView chalange;

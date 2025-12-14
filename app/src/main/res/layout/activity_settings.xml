@@ -100,40 +100,115 @@
                 android:inputType="number" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Division Interval:  " />
+
+            <EditText
+                android:id="@+id/editTextNumberSTARTDivision"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="1"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="até" />
+
+            <EditText
+                android:id="@+id/editTextNumberENDDivision"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="20"
+                android:inputType="number" />
+        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="50dp"
             android:orientation="vertical">
 
-            <Switch
-                android:id="@+id/switchHardMode"
+            <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Hard mode"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                android:layout_height="wrap_content" >
 
-            <Switch
-                android:id="@+id/switchPercentageMode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Percentage mode"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                <RadioButton
+                    android:id="@+id/rbTIMES_TABLE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:checked="true"
+                    android:text="Table mode"
+                    android:tag="Table"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-            <Switch
-                android:id="@+id/switchDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Date mode"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                <RadioButton
+                    android:id="@+id/rbHardMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:tag="Hard"
+                    android:text="Hard mode"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+                <RadioButton
+                    android:id="@+id/rbPERCENTAGE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:text="Percentage mode"
+                    android:tag="Percentage"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <RadioButton
+                    android:id="@+id/rbDIVISION"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Division mode"
+                    android:tag="Division"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <RadioButton
+                    android:id="@+id/switchDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Date mode"
+                    android:tag="Date"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            </RadioGroup>
+
+
+
 
         </LinearLayout>
 
@@ -142,11 +217,12 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
         tools:layout_editor_absoluteX="1dp" />
 

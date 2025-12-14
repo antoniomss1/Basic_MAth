@@ -12,13 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BasicMAth">
         <activity
+            android:name=".activities.ChooseModeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.historyActivity"
             android:exported="false" />
         <activity
-            android:name=".zenMode"
+            android:name=".activities.zenMode"
             android:exported="false" />
         <activity
             android:name=".activities.typePracticeActivity"
