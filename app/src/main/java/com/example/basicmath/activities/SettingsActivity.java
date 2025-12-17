@@ -143,6 +143,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         settingsPreferences.saveSettings(settings);
 
+
     }
 
     private Mode getCheckedMode(){
