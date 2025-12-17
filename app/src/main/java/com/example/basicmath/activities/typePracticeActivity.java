@@ -81,8 +81,17 @@ public class typePracticeActivity extends AppCompatActivity {
 
     private void applySettings(Settings settings) {
         System.out.println("APLICANDO SEETINGS");
-        System.out.println("settings: "+settings.toString());
 
+        if(settings == null){
+            System.out.println("era null");
+            Settings s = new Settings(Mode.TIMES_TABLE, 1, 10);
+            settingsPreferences = new SettingsPreferences(this);
+            settingsPreferences.saveSettings(s);
+            this.settings = settingsPreferences.getSettings();
+            settings = this.settings;
+            System.out.println("setttings: "+settings.toString());
+        }
+        System.out.println("settings: "+settings.toString());
 
         this.mode = settings.getMode();
 
