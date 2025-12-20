@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Basic MAth</string>
+    <string name="main_mode">Play</string>
+    <dimen name="main_button_width">300sp</dimen>
 </resources>
