@@ -37,27 +37,22 @@ public class ModesActivity extends AppCompatActivity {
         System.out.println("AQUI setou");
         // Dados
         List<ModeInfo> modes = new ArrayList<>();
-        modes.add(criarMode(new Intent(ModesActivity.this, zenMode.class)));
+        modes.add(criarMode(zenMode.class, R.drawable.meditation));
 
         System.out.println("AQUI added");
         // Adapter
+//        adapter = new AdapterModes(modes, new AdapterModes.OnModeClickListener() );
+
         adapter = new AdapterModes(modes, new AdapterModes.OnModeClickListener() {
             @Override
-            public void onModeClick(Mode mode) {
-                Toast.makeText(
-                        ModesActivity.this,
-                        "Modo clicado",
-                        Toast.LENGTH_SHORT
-                ).show();
+            public void onModeClick(ModeInfo mode) {
+                Intent intent = new Intent(ModesActivity.this, mode.getTargetActivity());
+                startActivity(intent);
             }
 
             @Override
             public void onModeButtonClick(Mode mode) {
-                Toast.makeText(
-                        ModesActivity.this,
-                        "Botão do modo clicado",
-                        Toast.LENGTH_SHORT
-                ).show();
+
             }
         });
 
@@ -66,42 +61,11 @@ public class ModesActivity extends AppCompatActivity {
         System.out.println("setou adapter");
     }
 
-//    private List<ModeInfo> createModes() {
-//        List<ModeInfo> list = new ArrayList<>();
-//
-//        list.add(new ModeInfo(
-//                "Addition",
-//                "Practice basic addition",
-//                R.drawable.ic_add // ícone seu
-//        ));
-//
-//        list.add(new ModeInfo(
-//                "Subtraction",
-//                "Train subtraction skills",
-//                R.drawable.ic_remove
-//        ));
-//
-//        list.add(new ModeInfo(
-//                "Multiplication",
-//                "Improve multiplication speed",
-//                R.drawable.ic_multiply
-//        ));
-//
-//        list.add(new ModeInfo(
-//                "Division",
-//                "Learn division step by step",
-//                R.drawable.ic_divide
-//        ));
-//
-//        return list;
-//    }
-
-    private ModeInfo criarMode(Intent intent){
+    private ModeInfo criarMode(Class<?> target, int image){
         System.out.println("AQUI criar 0");
 
-        ModeInfo m = new ModeInfo("Zen mode", "description", R.drawable.ic_launcher_foreground);
+        ModeInfo m = new ModeInfo("Zen mode", "description", image, target);
 
-        System.out.println("AQUI criou 0");
         return m;
     }
 }
