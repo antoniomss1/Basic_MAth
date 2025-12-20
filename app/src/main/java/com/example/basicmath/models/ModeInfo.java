@@ -5,6 +5,12 @@ public class ModeInfo {
     private String description;
     private int iconResId;
 
+    public ModeInfo(String title, String description, int iconResId) {
+        this.title = title;
+        this.description = description;
+        this.iconResId = iconResId;
+    }
+
     public String getTitle() {
         return title;
     }
