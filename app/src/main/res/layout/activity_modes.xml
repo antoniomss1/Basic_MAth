@@ -26,7 +26,7 @@
         android:gravity="center"
         android:padding="10sp"
         android:textSize="22sp"
-        android:text="schoose your mode"/>
+        android:text="Choose your mode"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_modes"
