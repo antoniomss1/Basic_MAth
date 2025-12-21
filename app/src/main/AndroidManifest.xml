@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BasicMAth">
         <activity
+            android:name=".activities.timeGuessActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ModesActivity"
             android:exported="false" />
         <activity

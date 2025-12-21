@@ -41,6 +41,7 @@ public class ModesActivity extends AppCompatActivity {
         System.out.println("AQUI setou");
         // Dados
         List<ModeInfo> modes = new ArrayList<>();
+
         String ZenDescription =
                 "A mode for when you don't wanna type";
         String ZenLongDescription =
@@ -48,6 +49,10 @@ public class ModesActivity extends AppCompatActivity {
                 "Zen mode was made for you. " +
                 "Just press the big Button on the screen and see if you got the calculation wright.";
         modes.add(criarMode(zenMode.class, R.drawable.meditation, ZenDescription, ZenLongDescription));
+
+        String dataDescription = "Can you say the week day?";
+        String dataLongDescription = "Practice your ability to find the week day of an event. Were you born in a 13th friday?";
+        modes.add(criarMode(timeGuessActivity.class, R.drawable.calendar, dataDescription, dataLongDescription));
 
         System.out.println("AQUI added");
         // Adapter
