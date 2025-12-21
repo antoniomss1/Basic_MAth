@@ -41,7 +41,13 @@ public class ModesActivity extends AppCompatActivity {
         System.out.println("AQUI setou");
         // Dados
         List<ModeInfo> modes = new ArrayList<>();
-        modes.add(criarMode(zenMode.class, R.drawable.meditation));
+        String ZenDescription =
+                "A mode for when you don't wanna type";
+        String ZenLongDescription =
+                "If you don't wanna type, relax! " +
+                "Zen mode was made for you. " +
+                "Just press the big Button on the screen and see if you got the calculation wright.";
+        modes.add(criarMode(zenMode.class, R.drawable.meditation, ZenDescription, ZenLongDescription));
 
         System.out.println("AQUI added");
         // Adapter
@@ -75,10 +81,10 @@ public class ModesActivity extends AppCompatActivity {
         });
     }
 
-    private ModeInfo criarMode(Class<?> target, int image){
+    private ModeInfo criarMode(Class<?> target, int image, String description, String longDescription){
         System.out.println("AQUI criar 0");
 
-        ModeInfo m = new ModeInfo("Zen mode", "description", image, target);
+        ModeInfo m = new ModeInfo("Zen mode", description, longDescription, image, target);
 
         return m;
     }

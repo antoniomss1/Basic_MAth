@@ -3,12 +3,23 @@ package com.example.basicmath.models;
 public class ModeInfo {
     private String title;
     private String description;
-    private int iconResId;
-    private Class<?> targetActivity;
+    private String longDescription;
 
-    public ModeInfo(String title, String description, int iconResId, Class<?> target) {
+    private int iconResId;
+
+    private Class<?> targetActivity;
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
+
+    public ModeInfo(String title, String description, String longDescription, int iconResId, Class<?> target) {
         this.title = title;
         this.description = description;
+        this.longDescription = longDescription;
         this.iconResId = iconResId;
         this.targetActivity = target;
     }
