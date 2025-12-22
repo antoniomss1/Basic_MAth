@@ -6,4 +6,12 @@
     </style>
 
     <style name="Theme.BasicMAth" parent="Base.Theme.BasicMAth" />
+
+    <style name="Theme.BasicMath" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Aplica a TODOS os MaterialButton -->
+        <item name="materialButtonStyle">@style/AppButtonStyle</item>
+
+    </style>
+
 </resources>

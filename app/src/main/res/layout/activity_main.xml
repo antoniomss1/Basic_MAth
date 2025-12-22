@@ -36,6 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewAppName" />
 
     <Button
+        style="@style/AppButtonStyle"
         android:id="@+id/buttonPlayTyping"
         android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
@@ -50,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewMainMenu" />
 
     <Button
+        style="@style/AppButtonStyle"
         android:id="@+id/buttonZenMode"
         android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
@@ -64,6 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonPlayTyping" />
 
     <Button
+        style="@style/AppButtonStyle"
         android:id="@+id/buttonHistory"
         android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
@@ -75,6 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonZenMode" />
 
     <Button
+        style="@style/AppButtonStyle"
         android:id="@+id/buttonSettings"
         android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
