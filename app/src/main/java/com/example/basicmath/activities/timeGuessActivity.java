@@ -47,8 +47,12 @@ public class timeGuessActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     public void click(View view) {
-        DayOfWeek day = DayOfWeek.valueOf(view.getTag().toString());
-        updatePoints(checkAnswer(day));
+        try {
+            DayOfWeek day = DayOfWeek.valueOf(view.getTag().toString());
+            updatePoints(checkAnswer(day));
+        }catch (Exception e){
+
+        }
     }
 
 
