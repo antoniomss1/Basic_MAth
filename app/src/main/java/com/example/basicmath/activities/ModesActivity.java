@@ -48,11 +48,11 @@ public class ModesActivity extends AppCompatActivity {
                 "If you don't wanna type, relax! " +
                 "Zen mode was made for you. " +
                 "Just press the big Button on the screen and see if you got the calculation wright.";
-        modes.add(criarMode(zenMode.class, R.drawable.meditation, ZenDescription, ZenLongDescription, "Zen mode"));
+        modes.add(createMode(zenMode.class, R.drawable.meditation, ZenDescription, ZenLongDescription, "Zen mode"));
 
         String dataDescription = "Can you say the week day?";
         String dataLongDescription = "Practice your ability to find the week day of an event. Were you born in a 13th friday?";
-        modes.add(criarMode(timeGuessActivity.class, R.drawable.calendar, dataDescription, dataLongDescription, "Date finding"));
+        modes.add(createMode(timeGuessActivity.class, R.drawable.calendar, dataDescription, dataLongDescription, "Date finding"));
 
         System.out.println("AQUI added");
         // Adapter
@@ -86,7 +86,7 @@ public class ModesActivity extends AppCompatActivity {
         });
     }
 
-    private ModeInfo criarMode(Class<?> target, int image, String description, String longDescription, String modeName){
+    private ModeInfo createMode(Class<?> target, int image, String description, String longDescription, String modeName){
         System.out.println("AQUI criar 0");
 
         ModeInfo m = new ModeInfo(modeName, description, longDescription, image, target);
