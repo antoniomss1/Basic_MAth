@@ -1,5 +1,8 @@
 package com.example.basicmath.activities;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.basicmath.R;
@@ -23,7 +27,7 @@ public class AdapterModes extends RecyclerView.Adapter<AdapterModes.ViewHolder> 
 
     // Listener para clique no item ou no botão
     public interface OnModeClickListener {
-        void onModeClick(Mode mode);
+        void onModeClick(ModeInfo mode);
         void onModeButtonClick(Mode mode);
     }
 
@@ -40,6 +44,7 @@ public class AdapterModes extends RecyclerView.Adapter<AdapterModes.ViewHolder> 
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ModeInfo mode = modeList.get(position);
@@ -47,6 +52,11 @@ public class AdapterModes extends RecyclerView.Adapter<AdapterModes.ViewHolder> 
         holder.title.setText(mode.getTitle());
         holder.description.setText(mode.getDescription());
         holder.icon.setImageResource(mode.getIconResId());
+        holder.button.setTooltipText(mode.getLongDescription());
+
+        holder.itemView.setOnClickListener(v ->
+                listener.onModeClick(mode)
+        );
 
         // Clique no item inteiro
 //        holder.itemView.setOnClickListener(v ->

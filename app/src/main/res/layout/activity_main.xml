@@ -13,8 +13,8 @@
         android:layout_height="75dp"
         android:layout_marginTop="60dp"
         android:gravity="center"
-        android:text="Basic MAth"
-        android:textSize="32dp"
+        android:text="@string/app_name"
+        android:textSize="32sp"
         android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,11 +37,11 @@
 
     <Button
         android:id="@+id/buttonPlayTyping"
-        android:layout_width="34mm"
+        android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
         android:layout_marginTop="60dp"
-        android:text="Play typing"
-        android:textSize="25dp"
+        android:text="@string/main_mode"
+        android:textSize="25sp"
         android:onClick="startTypingMode"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,10 +51,10 @@
 
     <Button
         android:id="@+id/buttonZenMode"
-        android:layout_width="34mm"
+        android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
         android:layout_marginTop="60dp"
-        android:text="Zen Mode"
+        android:text="Modes"
         android:textSize="25dp"
         android:onClick="zenMode"
 
@@ -65,18 +65,18 @@
 
     <Button
         android:id="@+id/buttonHistory"
-        android:layout_width="34mm"
+        android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
         android:layout_marginTop="60dp"
         android:text="History"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonZenMode" />
 
     <Button
         android:id="@+id/buttonSettings"
-        android:layout_width="34mm"
+        android:layout_width="@dimen/main_button_width"
         android:layout_height="54dp"
         android:layout_marginTop="60dp"
         android:text="Settings"

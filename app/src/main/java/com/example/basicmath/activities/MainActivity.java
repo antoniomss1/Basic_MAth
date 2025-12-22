@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void zenMode(View v){
-        Intent intent = new Intent(MainActivity.this, zenMode.class);
+        Intent intent = new Intent(MainActivity.this, ModesActivity.class);
         startActivity(intent);
     }
 
