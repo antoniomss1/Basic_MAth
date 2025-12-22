@@ -2,6 +2,7 @@ package com.example.basicmath.activities;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -50,8 +51,8 @@ public class timeGuessActivity extends AppCompatActivity {
         try {
             DayOfWeek day = DayOfWeek.valueOf(view.getTag().toString());
             updatePoints(checkAnswer(day));
-        }catch (Exception e){
-
+        }catch (IllegalArgumentException | NullPointerException e) {
+            Log.e("TimeGuess", "Tag inválida no botão", e);
         }
     }
 
