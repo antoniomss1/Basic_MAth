@@ -4,12 +4,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -74,7 +74,16 @@ public class historyActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_past_games);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        DividerItemDecoration divider =
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+
+        divider.setDrawable(
+                ContextCompat.getDrawable(this, R.drawable.gradient)
+        );
+
+        recyclerView.addItemDecoration(divider);
+
         recyclerView.setAdapter(adapter);
 
 
