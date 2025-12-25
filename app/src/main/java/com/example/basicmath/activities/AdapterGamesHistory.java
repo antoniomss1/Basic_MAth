@@ -53,7 +53,7 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
             }
         });
         holder.numberInSequence.setText(String.valueOf(history.getId()));
-
+        holder.score.setText(String.valueOf(history.getScore()));
     }
 
     @Override
@@ -68,6 +68,7 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
         TextView date;
         TextView numberOfProblems;
         TextView average;
+        TextView score;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +81,7 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
                     R.id.textViewNumberOfProblems
             );
             average = itemView.findViewById(R.id.textViewAverage);
+            score = itemView.findViewById(R.id.textViewScore);
 
         }
     }

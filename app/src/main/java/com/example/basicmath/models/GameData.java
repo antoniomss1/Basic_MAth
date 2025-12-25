@@ -59,8 +59,23 @@ public class GameData {
         return numberOfProblems - wrongProblems;
     }
 
-    public int getScore(){
-
+    public double getPrecision(){
+        return (double)(this.numberOfProblems)/(this.wrongProblems+1);
+    }
+    public double getScore(){
+        System.out.println("getting store:");
+        double val = this.getNumberOfProblems();
+        System.out.println("val: "+val);
+        System.out.println("precision: "+this.getPrecision());
+        val *= this.getPrecision();
+        System.out.println("val: "+val);
+        val *= this.averageTime;
+        System.out.println("val/(1/avg): "+val);
+        val = val*1000;
+        val = Math.round(val);
+        System.out.println("val rounded: "+val);
+        System.out.println("last val: "+val/1000);
+        return val/1000;
     }
 
 }
