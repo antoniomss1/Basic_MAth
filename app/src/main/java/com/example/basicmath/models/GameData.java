@@ -1,5 +1,7 @@
 package com.example.basicmath.models;
 
+import java.util.Locale;
+
 public class GameData {
 
     private String dateTime;
@@ -8,22 +10,25 @@ public class GameData {
     private int wrongProblems;
     private int biggestSequence;
     private long id;
+    private Mode mode;
 
-    public GameData(String dateTime, int numberOfProblems, double averageTime, int wrongProblems, int biggestSequence) {
+    public GameData(String dateTime, int numberOfProblems, double averageTime, int wrongProblems, int biggestSequence, Mode mode) {
         this.dateTime = dateTime;
         this.numberOfProblems = numberOfProblems;
         this.averageTime = averageTime;
         this.wrongProblems = wrongProblems;
         this.biggestSequence = biggestSequence;
+        this.mode = mode;
     }
 
-    public GameData(String dateTime, int numberOfProblems, double averageTime, int wrongProblems, int biggestSequence, int id) {
+    public GameData(String dateTime, int numberOfProblems, double averageTime, int wrongProblems, int biggestSequence, int id, Mode mode) {
         this.dateTime = dateTime;
         this.numberOfProblems = numberOfProblems;
         this.averageTime = averageTime;
         this.wrongProblems = wrongProblems;
         this.biggestSequence = biggestSequence;
         this.id = id;
+        this.mode = mode;
     }
 
     public String getDateTime() { return dateTime; }
@@ -78,4 +83,13 @@ public class GameData {
         return val/1000;
     }
 
+    public String getMode() {
+        return String.valueOf(this.mode);
+    }
+    public String getFormattedMode() {
+        return String.valueOf(this.mode).toLowerCase(Locale.ROOT).replace("_", " ");
+    }
+    public String retrieveMode(){
+        return String.valueOf(this.mode);
+    }
 }

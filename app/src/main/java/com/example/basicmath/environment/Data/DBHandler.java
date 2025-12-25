@@ -13,7 +13,7 @@ import com.example.basicmath.models.GameData;
 public class DBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = DBContract.TABLE_NAME;
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     public DBHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,6 +25,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 "CREATE TABLE " + DBContract.TABLE_NAME + " (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         DBContract.GAME_FIELD_DATE + " TEXT NOT NULL, " +
+                        DBContract.GAME_FIELD_MODE + " TEXT NOT NULL, " +
                         DBContract.GAME_FIELD_NUMBER_OF_PROBLEMS + " INTEGER NOT NULL, " +
                         DBContract.GAME_FIELD_AVERAGE + " REAL NOT NULL, " +
 //                        DBContract.GAME_FIELD_TIME_SPENT + " INTEGER NOT NULL, " +
@@ -48,6 +49,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         System.out.println("adding past game: "+game.toString());
         values.put(DBContract.GAME_FIELD_DATE, game.getDateTime());
+        values.put(DBContract.GAME_FIELD_MODE, game.getMode());
         values.put(DBContract.GAME_FIELD_NUMBER_OF_PROBLEMS, game.getNumberOfProblems());
         values.put(DBContract.GAME_FIELD_BIGGEST_SEQ, game.getBiggestSequence());
         values.put(DBContract.GAME_FIELD_AVERAGE, game.getAverageTime());

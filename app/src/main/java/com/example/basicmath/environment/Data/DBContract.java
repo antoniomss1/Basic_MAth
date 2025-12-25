@@ -11,6 +11,7 @@ public class DBContract {
     public static final String GAME_FIELD_BIGGEST_SEQ = "biggestSeq";
     public static final String GAME_FIELD_WRONG_PROBLEMS = "wrongProblems";
 
+    public static final String GAME_FIELD_MODE = "gameMode";
 }
 /*
 
