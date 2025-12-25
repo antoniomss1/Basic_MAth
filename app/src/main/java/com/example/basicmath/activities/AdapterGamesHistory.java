@@ -9,20 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.basicmath.R;
-import com.example.basicmath.models.GameHistory;
+import com.example.basicmath.models.GameData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistory.ViewHolder> {
 
-    private final List<GameHistory> historyList;
+    private final List<GameData> historyList;
     private final OnHistoryClickListener listener;
 
     public interface OnHistoryClickListener {
-        void onHistoryClick(GameHistory history);
+        void onHistoryClick(GameData history);
     }
 
-    public AdapterGamesHistory(List<GameHistory> historyList,
+    public AdapterGamesHistory(List<GameData> historyList,
                                OnHistoryClickListener listener) {
         this.historyList = historyList;
         this.listener = listener;
@@ -38,27 +39,21 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        GameHistory history = historyList.get(position);
+        GameData history = historyList.get(position);
 
-        holder.numberInSequence.setText(
-                String.valueOf(history.getNumberInSequence())
-        );
         holder.date.setText(history.getDateTime());
         holder.numberOfProblems.setText(
                 String.valueOf(history.getNumberOfProblems())
         );
-        holder.average.setText(history.getAverageTime());
-        holder.timeSpent.setText(history.getTimeSpent());
-        holder.accuracy.setText(history.getAccuracy());
-        holder.biggestSequence.setText(
-                String.valueOf(history.getBiggestSequence())
-        );
+        holder.average.setText(String.valueOf(history.getAverageTime()));
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onHistoryClick(history);
             }
         });
+        holder.numberInSequence.setText(String.valueOf(history.getId()));
+
     }
 
     @Override
@@ -73,30 +68,26 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
         TextView date;
         TextView numberOfProblems;
         TextView average;
-        TextView timeSpent;
-        TextView accuracy;
-        TextView biggestSequence;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             numberInSequence = itemView.findViewById(
-                    R.id.textViewNumberInSequency
+                    R.id.textViewID
             );
             date = itemView.findViewById(R.id.textViewDate);
             numberOfProblems = itemView.findViewById(
                     R.id.textViewNumberOfProblems
             );
             average = itemView.findViewById(R.id.textViewAverage);
-            timeSpent = itemView.findViewById(
-                    R.id.textViewTimeSpent
-            );
-            accuracy = itemView.findViewById(
-                    R.id.textViewAccuracy
-            );
-            biggestSequence = itemView.findViewById(
-                    R.id.textViewBiggestSequency
-            );
+
         }
     }
+
+    public void updateList(ArrayList<GameData> newList) {
+        this.historyList.clear();
+        this.historyList.addAll(newList);
+        notifyDataSetChanged();
+    }
+
 }
