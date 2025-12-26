@@ -27,6 +27,11 @@
             android:text="Date: " />
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="type: " />
+
+        <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,6 +61,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="2025-12-23 16:45" />
+
+        <TextView
+            android:id="@+id/textViewGameType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="type" />
 
         <TextView
             android:id="@+id/textViewNumberOfProblems"

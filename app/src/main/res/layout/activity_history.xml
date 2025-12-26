@@ -12,47 +12,13 @@
         android:id="@+id/textView2"
         android:layout_width="165dp"
         android:layout_height="50dp"
-        android:layout_marginTop="68dp"
+        android:layout_margin="34dp"
         android:gravity="center"
         android:text="History"
         android:textSize="32dp"
         android:textStyle="bold"
         android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:layout_marginTop="52dp"
-        android:gravity="center"
-        android:text="Best Time: "
-        android:textSize="24dp"/>
-
-    <TextView
-        android:id="@+id/textViewBestAvarage"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:gravity="center"
-        android:textSize="24dp"
-        android:text="10000000000"/>
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:gravity="center"
-        android:text="Most problems in a section"
-        android:textSize="24dp" />
-
-
-    <TextView
-        android:id="@+id/textViewMostProblems"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:gravity="center"
-        android:textSize="24dp"
-        android:text="0"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:layout_editor_absoluteX="174dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_past_games"

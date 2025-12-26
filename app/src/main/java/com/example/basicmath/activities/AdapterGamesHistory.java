@@ -54,6 +54,7 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
         });
         holder.numberInSequence.setText(String.valueOf(history.getId()));
         holder.score.setText(String.valueOf(history.getScore()));
+        holder.mode.setText(history.getFormattedMode());
     }
 
     @Override
@@ -69,6 +70,7 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
         TextView numberOfProblems;
         TextView average;
         TextView score;
+        TextView mode;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,7 +84,7 @@ public class AdapterGamesHistory extends RecyclerView.Adapter<AdapterGamesHistor
             );
             average = itemView.findViewById(R.id.textViewAverage);
             score = itemView.findViewById(R.id.textViewScore);
-
+            mode = itemView.findViewById(R.id.textViewGameType);
         }
     }
 

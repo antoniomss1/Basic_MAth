@@ -214,6 +214,7 @@ public class typePracticeActivity extends AppCompatActivity {
         intent.putExtra("avg", avg);
         intent.putExtra("quant", quantProblemas);
         intent.putExtra("wrongs", this.wrongAnsers);
+        intent.putExtra("gameMode", this.mode);
         intent.setAction(Intent.ACTION_SEND);
 
         System.out.println("action send");

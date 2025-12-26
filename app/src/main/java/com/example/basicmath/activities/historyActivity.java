@@ -21,6 +21,7 @@ import com.example.basicmath.R;
 import com.example.basicmath.environment.Data.DBContract;
 import com.example.basicmath.environment.Data.DBHandler;
 import com.example.basicmath.models.GameData;
+import com.example.basicmath.models.Mode;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class historyActivity extends AppCompatActivity {
     double precision;
     int wrongProblems;
     int biggestSeq =0;
+    Mode gameMode;
 
     private AdapterGamesHistory adapter;
     private ArrayList<GameData> pastGamesList;
@@ -50,10 +52,7 @@ public class historyActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        tv =        findViewById(R.id.textViewBestAvarage);
-        TVmostP =   findViewById(R.id.textViewMostProblems);
-        double avgAtual = Double.parseDouble(tv.getText().toString());
-        int qntAtual = Integer.parseInt(TVmostP.getText().toString());
+
 
 
         //pegar dados dos intents (game)
@@ -61,9 +60,11 @@ public class historyActivity extends AppCompatActivity {
         this.qnt = getIntent().getIntExtra("quant", 0);
         this.precision = getIntent().getDoubleExtra("precision", 0);
         this.wrongProblems = getIntent().getIntExtra("wrongs", 19);
+        this.gameMode = getIntent().getSerializableExtra("gameMode", Mode.class);
+
         LocalDateTime period = LocalDateTime.now().withSecond(0).withNano(0);
 
-        GameData game = new GameData(String.valueOf(period).replace("T", " "), qnt, avg, wrongProblems, biggestSeq);
+        GameData game = new GameData(String.valueOf(period).replace("T", " "), qnt, avg, wrongProblems, biggestSeq, gameMode);
 
         pastGamesList = new ArrayList<>();
         adapter = new AdapterGamesHistory(pastGamesList, null);
@@ -143,8 +144,9 @@ public class historyActivity extends AppCompatActivity {
                 int biggestSeq =  cursor.getInt(cursor.getColumnIndexOrThrow(DBContract.GAME_FIELD_BIGGEST_SEQ));
                 System.out.println("wrong");
                 int wrongProblems =  cursor.getInt(cursor.getColumnIndexOrThrow(DBContract.GAME_FIELD_WRONG_PROBLEMS));
+                String modeStr = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.GAME_FIELD_MODE));
 
-                GameData t = new GameData(date, numberOfProblems, average, wrongProblems, biggestSeq, id);
+                GameData t = new GameData(date, numberOfProblems, average, wrongProblems, biggestSeq, id, Mode.valueOf(modeStr));
                 l.add(t);
             } while (cursor.moveToNext());
         }
