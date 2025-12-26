@@ -1,5 +1,6 @@
 package com.example.basicmath.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.basicmath.R;
+import com.example.basicmath.models.Mode;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -25,10 +27,15 @@ import java.util.Objects;
 import java.util.Random;
 
 public class timeGuessActivity extends AppCompatActivity {
-    TextView problem;
+    TextView problem, TVavarageTime;
     LocalDate currentProblem;
     TextView TVcorrect;
     TextView TVwrong;
+    int rigthAnswers;
+    int wrongAnsers;
+    int timeSum, denominator;
+    Mode mode = Mode.DATE_MODE;
+    long startTime, endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +49,12 @@ public class timeGuessActivity extends AppCompatActivity {
         });
         problem     = findViewById(R.id.textViewDateProblem);
         TVcorrect   = findViewById(R.id.textViewCorrectP);
+        TVavarageTime = findViewById(R.id.textViewAverageTime);
         TVwrong     = findViewById(R.id.textViewWrongP);
+        rigthAnswers = 0;
+        wrongAnsers = 0;
+        timeSum = 0;
+        denominator = 0;
 
     }
 
@@ -59,24 +71,27 @@ public class timeGuessActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     private void updatePoints(boolean b) {
-        int wright, wrong;
-        wright = Integer.parseInt(this.TVcorrect.getText().toString());
-        wrong = Integer.parseInt(this.TVwrong.getText().toString());
+//        int rigthAnswers, wrongAnsers;
+//        rigthAnswers = Integer.parseInt(this.TVcorrect.getText().toString());
+//        wrongAnsers = Integer.parseInt(this.TVwrong.getText().toString());
         RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(250);
         rotate.setInterpolator(new LinearInterpolator());
         if(b){
-            wright++;
+            rigthAnswers++;
             TVcorrect.startAnimation(rotate);
+            resetTimer();
             setNewProblem();
         }else{
-            wrong++;
+            wrongAnsers++;
             TVwrong.startAnimation(rotate);
         }
 
-        TVcorrect.setText(String.valueOf(wright));
-        TVwrong.setText(String.valueOf(wrong));
+        TVcorrect.setText(String.valueOf(rigthAnswers));
+        TVwrong.setText(String.valueOf(wrongAnsers));
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     private void setNewProblem() {
@@ -111,7 +126,27 @@ public class timeGuessActivity extends AppCompatActivity {
         }else{
             currentProblem = LocalDate.now().minusWeeks(r.nextLong(9999));
         }
+        startTimer();
         this.problem.setText(currentProblem.toString());
+    }
+
+    private void startTimer() {
+        startTime = System.currentTimeMillis();
+    }
+    private void resetTimer() {
+        endTime = System.currentTimeMillis();
+        long took = endTime - startTime;
+        timeSum += took;
+        denominator++;
+        double avarage = timeSum/denominator;
+        System.out.println(avarage);
+        avarage = avarage/1000;
+        System.out.println(avarage);
+
+        TVavarageTime.setText("Avg. = "+avarage);
+
+        //reinicia bem no final do anterior
+        startTime = endTime;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -119,7 +154,33 @@ public class timeGuessActivity extends AppCompatActivity {
         System.out.println("ans: "+ans);
         System.out.println("problrem: " + currentProblem.toString());
         System.out.println("dayof week: " + currentProblem.getDayOfWeek());
+
         return Objects.equals(ans, currentProblem.getDayOfWeek());
     }
 
+    public void endSection(View view) {
+        System.out.println("ending section");
+        double  precision = (double) rigthAnswers /(wrongAnsers+rigthAnswers),
+                avg = (double) timeSum /denominator;
+        System.out.println("precision: "+precision);
+        System.out.println("avg: ");
+        int quantProblemas = denominator;
+
+        avg = Math.round(avg);
+        avg = avg/1000;
+
+        System.out.println("intent:");
+
+        Intent intent = new Intent(timeGuessActivity.this, historyActivity.class);
+        intent.putExtra("precision", precision);
+        intent.putExtra("avg", avg);
+        intent.putExtra("quant", quantProblemas);
+        intent.putExtra("wrongs", this.wrongAnsers);
+        intent.putExtra("gameMode", this.mode);
+        intent.setAction(Intent.ACTION_SEND);
+
+        System.out.println("action send");
+
+        startActivity(intent);
+    }
 }

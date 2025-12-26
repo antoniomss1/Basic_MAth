@@ -39,6 +39,14 @@
             android:textColor="@color/green"
             android:text="0" />
 
+        <TextView
+            android:id="@+id/textViewAverageTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=""
+            android:hint="Avarage time"/>
 
         <TextView
             android:id="@+id/textViewWrongP"
@@ -60,6 +68,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="16sp"
         android:text="Finish"
+        android:onClick="endSection"
         android:textSize="@dimen/little_text"/>
 
     <LinearLayout
