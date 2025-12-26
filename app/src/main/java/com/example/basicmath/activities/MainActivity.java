@@ -43,5 +43,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void enterHistory(View view) {
+        Intent intent = new Intent(MainActivity.this, historyActivity.class);
+        startActivity(intent);
+    }
 }

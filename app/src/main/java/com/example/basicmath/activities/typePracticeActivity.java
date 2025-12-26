@@ -3,6 +3,7 @@ package com.example.basicmath.activities;
 
 import static com.example.basicmath.utils.ProblemUtils.checkAnswer;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -198,27 +199,27 @@ public class typePracticeActivity extends AppCompatActivity {
     }
 
     public void endSection(View v){
-//        System.out.println("qui0");
-//        double  precision = (double) rigthAnswers /(wrongAnsers+rigthAnswers),
-//                avg = (double) timeSum /denominator;
-//        int quantProblemas = denominator;
-//
-//        System.out.println("intent:");
-//
-//        Intent intent = new Intent(typePracticeActivity.this, historyActivity.class);
-//        intent.putExtra("precision", precision);
-//        intent.putExtra("avg", avg);
-//        intent.putExtra("quant", quantProblemas);
-//        intent.setAction(Intent.ACTION_SEND);
-//
-//        System.out.println("action send");
-//
-//        SharedPreferences settings = getApplicationContext().getSharedPreferences("data", 0);
-//        SharedPreferences.Editor editor = settings.edit();
-//
-//        editor.apply();
-//
-//        startActivity(intent);
+        double  precision = (double) rigthAnswers /(wrongAnsers+rigthAnswers),
+                avg = (double) timeSum /denominator;
+
+        int quantProblemas = denominator;
+
+        avg = Math.round(avg);
+        avg = avg/1000;
+
+        System.out.println("intent:");
+
+        Intent intent = new Intent(typePracticeActivity.this, historyActivity.class);
+        intent.putExtra("precision", precision);
+        intent.putExtra("avg", avg);
+        intent.putExtra("quant", quantProblemas);
+        intent.putExtra("wrongs", this.wrongAnsers);
+        intent.putExtra("gameMode", this.mode);
+        intent.setAction(Intent.ACTION_SEND);
+
+        System.out.println("action send");
+
+        startActivity(intent);
     }
 
 

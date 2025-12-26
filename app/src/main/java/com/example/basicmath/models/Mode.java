@@ -1,10 +1,11 @@
 package com.example.basicmath.models;
 
-public enum Mode {
+public enum Mode{
     TIMES_TABLE,
     HARD_TABLE,
     PERCENTAGE,
     DIVISION,
-    DATE_MODE
+    DATE_MODE,
+    ZEN_MODE
 
 }
