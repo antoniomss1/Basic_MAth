@@ -1,6 +1,10 @@
 package com.example.basicmath.models;
 
-public class ModeInfo {
+import android.os.Bundle;
+
+import java.io.Serializable;
+
+public class ModeInfo implements Serializable {
     private String title;
     private String description;
     private String longDescription;
@@ -8,6 +12,47 @@ public class ModeInfo {
     private int iconResId;
 
     private Class<?> targetActivity;
+    private Bundle info;
+    private Boolean requiresInfo = false;
+
+    @Override
+    public String toString() {
+        return "ModeInfo{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", longDescription='" + longDescription + '\'' +
+                ", iconResId=" + iconResId +
+                ", targetActivity=" + targetActivity +
+                ", info=" + info +
+                ", requiresInfo=" + requiresInfo +
+                '}';
+    }
+
+    public ModeInfo(String title, String description, String longDescription, int iconResId, Class<?> targetActivity, Boolean requiresInfo) {
+        this.title = title;
+        this.description = description;
+        this.longDescription = longDescription;
+        this.iconResId = iconResId;
+        this.targetActivity = targetActivity;
+        this.requiresInfo = requiresInfo;
+    }
+
+    public Boolean getRequiresInfo() {
+        return requiresInfo;
+    }
+
+    public void setRequiresInfo(Boolean requiresInfo) {
+        this.requiresInfo = requiresInfo;
+    }
+
+    public Bundle getInfo() {
+        return info;
+    }
+
+    public void setInfo(Bundle info) {
+        this.info = info;
+    }
+
     public String getLongDescription() {
         return longDescription;
     }

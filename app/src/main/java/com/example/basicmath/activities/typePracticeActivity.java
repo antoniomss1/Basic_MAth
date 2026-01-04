@@ -6,11 +6,13 @@ import static com.example.basicmath.utils.ProblemUtils.checkAnswer;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
@@ -26,6 +28,9 @@ import com.example.basicmath.models.Problem;
 import com.example.basicmath.models.Mode;
 import com.example.basicmath.utils.ProblemGenerator;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class typePracticeActivity extends AppCompatActivity {
 
 
@@ -33,6 +38,7 @@ public class typePracticeActivity extends AppCompatActivity {
     public String string;
 
     private TextView TVcounterWrongs, TVcounterRight, TVavarageTime;
+    private TextView TVTimeLimit;
 
     private int count=0;
 
@@ -67,6 +73,27 @@ public class typePracticeActivity extends AppCompatActivity {
         answerTEXT = findViewById(R.id.textViewAnswer);
 
         TVavarageTime = findViewById(R.id.textViewAvarageTime);
+        int timeSecs = getIntent().getIntExtra("time_seconds", 0);
+        long timeMilliseconds = timeSecs * 1000L;
+        if(timeMilliseconds != 0){
+            TVTimeLimit = TVavarageTime;
+            new CountDownTimer(timeMilliseconds, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    // Used for formatting digit to be in 2 digits only
+                    NumberFormat f = new DecimalFormat("00");
+                    long hour = (millisUntilFinished / 3600000) % 24;
+                    long min = (millisUntilFinished / 60000) % 60;
+                    long sec = (millisUntilFinished / 1000) % 60;
+                    TVTimeLimit.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                }
+                // When the task is over it will print 00:00:00 there
+                public void onFinish() {
+                    TVTimeLimit.setText("00:00:00");
+                    Toast.makeText(typePracticeActivity.this, "Tempo acabou!!!", Toast.LENGTH_SHORT).show();
+                    endSection(null);
+                }
+            }.start();
+        }
 
 
         TVcounterWrongs = findViewById(R.id.textViewWrongAnswers);
