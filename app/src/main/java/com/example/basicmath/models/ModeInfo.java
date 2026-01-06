@@ -13,7 +13,12 @@ public class ModeInfo implements Serializable {
 
     private Class<?> targetActivity;
     private Bundle info;
-    private Boolean requiresInfo = false;
+
+    private ModeConfigType configType;
+
+    public ModeConfigType getConfigType() {
+        return configType;
+    }
 
     @Override
     public String toString() {
@@ -23,27 +28,19 @@ public class ModeInfo implements Serializable {
                 ", longDescription='" + longDescription + '\'' +
                 ", iconResId=" + iconResId +
                 ", targetActivity=" + targetActivity +
-                ", info=" + info +
-                ", requiresInfo=" + requiresInfo +
+                ", info=" + info  +
                 '}';
     }
 
-    public ModeInfo(String title, String description, String longDescription, int iconResId, Class<?> targetActivity, Boolean requiresInfo) {
+    public ModeInfo(String title, String description, String longDescription, int iconResId, Class<?> targetActivity, ModeConfigType modeConfigType) {
         this.title = title;
         this.description = description;
         this.longDescription = longDescription;
         this.iconResId = iconResId;
         this.targetActivity = targetActivity;
-        this.requiresInfo = requiresInfo;
+        this.configType = modeConfigType;
     }
 
-    public Boolean getRequiresInfo() {
-        return requiresInfo;
-    }
-
-    public void setRequiresInfo(Boolean requiresInfo) {
-        this.requiresInfo = requiresInfo;
-    }
 
     public Bundle getInfo() {
         return info;
@@ -67,6 +64,7 @@ public class ModeInfo implements Serializable {
         this.longDescription = longDescription;
         this.iconResId = iconResId;
         this.targetActivity = target;
+        this.configType = ModeConfigType.NONE;
     }
 
     public String getTitle() {
