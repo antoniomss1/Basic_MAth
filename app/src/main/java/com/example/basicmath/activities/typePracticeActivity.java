@@ -1,6 +1,7 @@
 package com.example.basicmath.activities;
 
 
+import static android.view.View.GONE;
 import static com.example.basicmath.utils.ProblemUtils.checkAnswer;
 
 import android.content.Intent;
@@ -42,7 +43,7 @@ public class typePracticeActivity extends AppCompatActivity {
 
     private int count=0;
 
-    int a, b, chooser, btnCounter=0;
+    int a, b;
     char operation;
     int rigthAnswers = 0, wrongAnsers = 0;
     long startTime, endTime;
@@ -50,13 +51,11 @@ public class typePracticeActivity extends AppCompatActivity {
     int denominator=0;
     private int ans;
 
-    //trocar esses "mode" por algo mais geral
-    private Boolean hardMode;
-    private Boolean percentageMode;
     private Mode mode;
     private SettingsPreferences settingsPreferences;
     private Settings settings;
     Problem currentProblem = new Problem();
+    private int lifes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +73,12 @@ public class typePracticeActivity extends AppCompatActivity {
 
         TVavarageTime = findViewById(R.id.textViewAvarageTime);
         int timeSecs = getIntent().getIntExtra("time_seconds", 0);
+        lifes = getIntent().getIntExtra("lives_number", 0);
+
+
         long timeMilliseconds = timeSecs * 1000L;
         if(timeMilliseconds != 0){
+            findViewById(R.id.buttonReset).setVisibility(GONE);
             TVTimeLimit = TVavarageTime;
             new CountDownTimer(timeMilliseconds, 1000) {
                 public void onTick(long millisUntilFinished) {
@@ -105,6 +108,11 @@ public class typePracticeActivity extends AppCompatActivity {
 //        System.out.println("PEGOU SETTINGS: "+ settings.toString());
         applySettings(settings);
 
+        if(lifes != 0){
+            findViewById(R.id.buttonReset).setVisibility(GONE);
+            String newText = "❤\uFE0F: "+(lifes - wrongAnsers);
+            TVcounterWrongs.setText(newText);
+        }
     }
 
     private void applySettings(Settings settings) {
@@ -222,6 +230,15 @@ public class typePracticeActivity extends AppCompatActivity {
             rotate.setInterpolator(new LinearInterpolator());
 
             TVcounterWrongs.startAnimation(rotate);
+            if(this.lifes != 0){
+                newText = "❤\uFE0F: "+(lifes - wrongAnsers);
+                TVcounterWrongs.setText(newText);
+
+                if(this.lifes - wrongAnsers <=0){
+                    Toast.makeText(this, "Oh No! You lost All your lives! ", Toast.LENGTH_SHORT).show();
+                    endSection(null);
+                }
+            }
         }
     }
 
@@ -237,6 +254,7 @@ public class typePracticeActivity extends AppCompatActivity {
         System.out.println("intent:");
 
         Intent intent = new Intent(typePracticeActivity.this, historyActivity.class);
+
         intent.putExtra("precision", precision);
         intent.putExtra("avg", avg);
         intent.putExtra("quant", quantProblemas);
@@ -246,7 +264,11 @@ public class typePracticeActivity extends AppCompatActivity {
 
         System.out.println("action send");
 
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         startActivity(intent);
+        finish();
     }
 
 

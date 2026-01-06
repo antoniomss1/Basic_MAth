@@ -1,5 +1,6 @@
 package com.example.basicmath.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -113,6 +114,13 @@ public class historyActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        startActivity(new Intent(historyActivity.this, MainActivity.class));
+//    }
+
 
     private void verifyBestResult(double avg, int qnt, double precision) {
 
