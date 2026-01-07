@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -111,7 +112,7 @@ public final class ModeConfigDialogs {
 
                 RadioButton btn = dialogView.findViewById(group.getCheckedRadioButtonId());
 
-                if(btn.equals(-1)){
+                if(group.getCheckedRadioButtonId() == -1){
                     if (texto.isEmpty()) {
                         input.setError("Digite um valor");
                         return;
@@ -126,8 +127,13 @@ public final class ModeConfigDialogs {
                         input.setError("Invalid value");
                         return;
                     }
+                }else{
+                    System.out.println("else:");
+                    lifes = Integer.valueOf(btn.getTag().toString());
+                    System.out.println("lifes = "+ lifes);
                 }
-                lifes = Integer.valueOf(btn.getTag().toString());
+
+                System.out.println("lifes final: "+lifes);
 
                 // Tudo ok → abre a próxima activity
                 intent.putExtra("lives_number", lifes);
