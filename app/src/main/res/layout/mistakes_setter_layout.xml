@@ -12,27 +12,27 @@
 
         <RadioButton
             android:id="@+id/one_mistake"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="1"
-            android:text="1 mistake"/>
+            android:text="1 life"/>
         <RadioButton
             android:id="@+id/five_mistakes"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="5"
-            android:text="5 mistake"/>
+            android:text="5 lifes"/>
         <RadioButton
             android:id="@+id/ten_mistakes"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="10"
-            android:text="10 mistake"/>
+            android:text="10 lifes"/>
         <EditText
             android:id="@+id/ET_lives"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="enter prefered number"/>
+            android:hint="enter prefered number of lifes"/>
     </RadioGroup>
 </LinearLayout>

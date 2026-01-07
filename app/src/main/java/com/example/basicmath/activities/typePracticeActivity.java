@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
@@ -110,7 +111,7 @@ public class typePracticeActivity extends AppCompatActivity {
 
         if(lifes != 0){
             findViewById(R.id.buttonReset).setVisibility(GONE);
-            String newText = "❤\uFE0F: "+(lifes - wrongAnsers);
+            String newText = "❤\uFE0F "+(lifes - wrongAnsers);
             TVcounterWrongs.setText(newText);
         }
     }
@@ -225,19 +226,25 @@ public class typePracticeActivity extends AppCompatActivity {
             wrongAnsers++;
             String newText = ""+wrongAnsers;
             TVcounterWrongs.setText(newText);
-            RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotate.setDuration(250);
-            rotate.setInterpolator(new LinearInterpolator());
 
-            TVcounterWrongs.startAnimation(rotate);
             if(this.lifes != 0){
-                newText = "❤\uFE0F: "+(lifes - wrongAnsers);
+                newText = "❤\uFE0F "+(lifes - wrongAnsers);
                 TVcounterWrongs.setText(newText);
 
                 if(this.lifes - wrongAnsers <=0){
                     Toast.makeText(this, "Oh No! You lost All your lives! ", Toast.LENGTH_SHORT).show();
                     endSection(null);
                 }
+                //animation
+                Animation object = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blinks);
+                TVcounterWrongs.startAnimation(object);
+
+            }else{
+                //default animation
+                RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(250);
+                rotate.setInterpolator(new LinearInterpolator());
+                TVcounterWrongs.startAnimation(rotate);
             }
         }
     }
