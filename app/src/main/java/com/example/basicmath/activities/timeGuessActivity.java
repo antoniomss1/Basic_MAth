@@ -182,5 +182,6 @@ public class timeGuessActivity extends AppCompatActivity {
         System.out.println("action send");
 
         startActivity(intent);
+        finish();
     }
 }
