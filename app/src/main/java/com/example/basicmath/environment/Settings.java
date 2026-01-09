@@ -1,32 +1,26 @@
 package com.example.basicmath.environment;
 
 import com.example.basicmath.models.Mode;
+import com.example.basicmath.models.Operation;
+
+import java.util.ArrayList;
 
 public class Settings {
-    //trocar esses boolean pra uma classe enum Modes com os modos
-//    public Boolean hardMode;
-//    public Boolean percentageMode;
-//    public Boolean DateMode;
-    public int tableStart;
-    public int tableEnd;
+    public int multiplicationBegin;
+    public int multiplicationEnd;
+    public Mode mode;
 
-    private Mode mode;
+    private ArrayList<Operation> operations;
 
-    public Settings(Mode mode, int tableStart, int tableEnd) {
+    public Settings(Operation operation, int tableStart, int tableEnd, Mode mode) {
+
+        this.operations= new ArrayList<>();
+        this.operations.add(operation);
+
+        this.multiplicationBegin = tableStart;
+        this.multiplicationEnd = tableEnd;
         this.mode = mode;
-        this.tableStart = tableStart;
-        this.tableEnd = tableEnd;
     }
-
-    @Override
-    public String toString() {
-        return "Settings{" +
-                "tableStart=" + tableStart +
-                ", tableEnd=" + tableEnd +
-                ", mode=" + mode +
-                '}';
-    }
-
 
     public Mode getMode() {
         return mode;
@@ -36,19 +30,46 @@ public class Settings {
         this.mode = mode;
     }
 
-    public int getTableStart() {
-        return tableStart;
+    public Settings(ArrayList<Operation> modes, int tableStart, int tableEnd) {
+
+        this.operations= new ArrayList<>();
+        this.operations.addAll(modes);
+
+        this.multiplicationBegin = tableStart;
+        this.multiplicationEnd = tableEnd;
     }
 
-    public void setTableStart(int tableStart) {
-        this.tableStart = tableStart;
+    @Override
+    public String toString() {
+        return "Settings{" +
+                "tableStart=" + multiplicationBegin +
+                ", tableEnd=" + multiplicationEnd +
+                ", mode=" + operations +
+                '}';
     }
 
-    public int getTableEnd() {
-        return tableEnd;
+
+    public ArrayList<Operation> getModes() {
+        return operations;
     }
 
-    public void setTableEnd(int tableEnd) {
-        this.tableEnd = tableEnd;
+    public void setMode(ArrayList<Operation> modes) {
+        this.operations = modes;
+    }
+
+    public int getMultiplicationBegin() {
+        return multiplicationBegin;
+    }
+
+    public void setMultiplicationBegin(int multiplicationBegin) {
+        this.multiplicationBegin = multiplicationBegin;
+    }
+
+    public int getMultiplicationEnd() {
+        return multiplicationEnd;
+    }
+
+    public void setMultiplicationEnd(int multiplicationEnd) {
+        this.multiplicationEnd = multiplicationEnd;
     }
 }
