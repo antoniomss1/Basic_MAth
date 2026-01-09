@@ -66,7 +66,7 @@ public class ModesActivity extends AppCompatActivity {
         String timeModeDescription =
                 "run against the clock!";
         String timeModeLongDescription =
-                "select your time limit (seconds) and solve as manny problems as you can!";
+                "solve as manny problems as you can in the selected time!";
 
         //criar pequena tela para seleção do tempo. esse modo exige que selecione o tempo
 
@@ -75,9 +75,9 @@ public class ModesActivity extends AppCompatActivity {
         );
 
         String livesModeDescription =
-                "X and you're out";
+                "X mistakes and you're out";
         String livesModeLongDescription =
-                "You got a few chances, solve as manny problems as you can without missing!";
+                "You got a few chances, solve as manny problems as you can limiting the number of mistakes!";
 
         modes.add(
                 createMode(typePracticeActivity.class, R.drawable.life, livesModeDescription, livesModeLongDescription, "survival", ModeConfigType.LIVES)
