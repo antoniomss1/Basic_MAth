@@ -14,12 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.preference.PreferenceManager;
 
 import com.example.basicmath.R;
 import com.example.basicmath.environment.Settings;
-import com.example.basicmath.environment.SettingsPreferences;
+import com.example.basicmath.models.Operation;
 import com.example.basicmath.models.Problem;
 import com.example.basicmath.models.Mode;
+
+import java.util.ArrayList;
 
 public class zenMode extends AppCompatActivity {
 
@@ -29,10 +32,11 @@ public class zenMode extends AppCompatActivity {
     private Mode mode;
     private int count=0;
     int a, b, chooser;
-    private SettingsPreferences settingsPreferences;
     private Settings settings;
-    Problem problem = new Problem();
-
+    private Problem problem = new Problem();
+    private int startMultiplication;
+    private int endMultiplication;
+    private ArrayList<Operation> activeOperations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,31 +71,42 @@ public class zenMode extends AppCompatActivity {
             }
         });
 
-        settingsPreferences = new SettingsPreferences(this);
-        settings = settingsPreferences.getSettings();
-        applySettings(settings);
+
+
+        String sTT = PreferenceManager.getDefaultSharedPreferences(this).getString("table_start","1");
+        String eTT = PreferenceManager.getDefaultSharedPreferences(this).getString("table_end","10");
+        //getting default settings
+        startMultiplication = Integer.parseInt(sTT);
+        endMultiplication   = Integer.parseInt(eTT);
+        activeOperations = new ArrayList<>();
+        activeOperations = getActiveOperations();
+
+        settings = new Settings(activeOperations, startMultiplication, endMultiplication);
     }
 
-    private void applySettings(Settings settings) {
-        System.out.println("APLICANDO SEETINGS");
 
-        if(settings == null){
-            System.out.println("era null");
-            Settings s = new Settings(Mode.TIMES_TABLE, 1, 10);
-            settingsPreferences = new SettingsPreferences(this);
-            settingsPreferences.saveSettings(s);
-            this.settings = settingsPreferences.getSettings();
-            settings = this.settings;
-            System.out.println("setttings: "+settings.toString());
+    private ArrayList<Operation> getActiveOperations() {
+        ArrayList<Operation> activeModes = new ArrayList<>();
+        Boolean b;
+
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_times_table",true)){
+            activeModes.add(Operation.MULTIPLICATION);
         }
-        System.out.println("settings: "+settings.toString());
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_division",false)){
+            activeModes.add(Operation.DIVISION);
+        }
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_percentage",false)){
+            activeModes.add(Operation.PERCENTAGE);
+        }
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_addition",false)){
+            activeModes.add(Operation.ADDITION);
+        }
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_subtraction",false)){
+            activeModes.add(Operation.SUBTRACTION);
+        }
 
-        this.mode = settings.getMode();
-
-        System.out.println("mode: "+mode);
-        System.out.println("SETOU CHECKEDS");
+        return  activeModes;
     }
-
 
 
 }

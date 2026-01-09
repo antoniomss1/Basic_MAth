@@ -1,10 +1,18 @@
 package com.example.basicmath.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.text.InputType;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -14,10 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.basicmath.R;
 import com.example.basicmath.models.Mode;
+import com.example.basicmath.models.ModeConfigType;
 import com.example.basicmath.models.ModeInfo;
+import com.example.basicmath.utils.ModeConfigDialogs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ModesActivity extends AppCompatActivity {
 
@@ -45,8 +56,6 @@ public class ModesActivity extends AppCompatActivity {
         String ZenDescription =
                 "A mode for when you don't wanna type";
         String ZenLongDescription =
-                "If you don't wanna type, relax! " +
-                "Zen mode was made for you. " +
                 "Just press the big Button on the screen and see if you got the calculation wright.";
         modes.add(createMode(zenMode.class, R.drawable.meditation, ZenDescription, ZenLongDescription, "Zen mode"));
 
@@ -54,15 +63,52 @@ public class ModesActivity extends AppCompatActivity {
         String dataLongDescription = "Practice your ability to find the week day of an event. Were you born in a 13th friday?";
         modes.add(createMode(timeGuessActivity.class, R.drawable.calendar, dataDescription, dataLongDescription, "Date finding"));
 
-        System.out.println("AQUI added");
-        // Adapter
-//        adapter = new AdapterModes(modes, new AdapterModes.OnModeClickListener() );
+        String timeModeDescription =
+                "run against the clock!";
+        String timeModeLongDescription =
+                "solve as manny problems as you can in the selected time!";
 
-        adapter = new AdapterModes(modes, new AdapterModes.OnModeClickListener() {
+        //criar pequena tela para seleção do tempo. esse modo exige que selecione o tempo
+
+        modes.add(
+                createMode(typePracticeActivity.class, R.drawable.clock, timeModeDescription, timeModeLongDescription, "cronometred", ModeConfigType.TIME_LIMIT)
+        );
+
+        String livesModeDescription =
+                "X mistakes and you're out";
+        String livesModeLongDescription =
+                "You got a few chances, solve as manny problems as you can limiting the number of mistakes!";
+
+        modes.add(
+                createMode(typePracticeActivity.class, R.drawable.life, livesModeDescription, livesModeLongDescription, "survival", ModeConfigType.LIVES)
+        );
+
+                adapter = new AdapterModes(modes, new AdapterModes.OnModeClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onModeClick(ModeInfo mode) {
                 Intent intent = new Intent(ModesActivity.this, mode.getTargetActivity());
-                startActivity(intent);
+                switch (mode.getConfigType()){
+                    case TIME_LIMIT:
+                        ModeConfigDialogs.showTimeDialog(ModesActivity.this, intent);
+//                        showTimeDialog(intent);
+                        break;
+                    case LIVES:
+                        ModeConfigDialogs.showLivesDialog(ModesActivity.this, intent);
+//                        askMistakesNumberDialog(intent);
+                        break;
+                    case NONE:
+                        startActivity(intent);
+                        break;
+
+                }
+//                if (mode.getRequiresInfo()){
+////                    askMistakesNumberDialog(intent);
+//                }
+//                else{
+//                    intent.putExtra("mode", mode);
+//                    startActivity(intent);
+//                }
             }
 
             @Override
@@ -93,4 +139,132 @@ public class ModesActivity extends AppCompatActivity {
 
         return m;
     }
+    private ModeInfo createMode(Class<?> target, int image, String description, String longDescription, String modeName, ModeConfigType modeConfigType){
+        System.out.println("AQUI criar 0");
+
+        ModeInfo m = new ModeInfo(modeName, description, longDescription, image, target, modeConfigType);
+
+        return m;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showTimeDialog(Intent intent) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Informe o tempo");
+        builder.setMessage("Digite o tempo em segundos:");
+
+        // Campo de texto
+        EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setHint("Ex: 30");
+
+        // Margem no EditText (opcional, mas recomendado)
+        int padding = (int) (16 * getResources().getDisplayMetrics().density);
+        input.setPadding(padding, padding, padding, padding);
+
+        builder.setView(input);
+
+        builder.setCancelable(false); // impede fechar sem escolher
+
+        builder.setPositiveButton("OK", null); // vamos sobrescrever depois
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+
+        AtomicInteger tempoT = new AtomicInteger();
+        dialog.setOnShowListener(d -> {
+            Button btnOk = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            btnOk.setOnClickListener(v -> {
+                String texto = input.getText().toString().trim();
+
+                if (texto.isEmpty()) {
+                    input.setError("Digite um valor");
+                    return;
+                }
+
+                int tempo;
+                try {
+                    tempo = Integer.parseInt(texto);
+                } catch (NumberFormatException e) {
+                    input.setError("Valor inválido");
+                    return;
+                }
+
+                if (tempo <= 0) {
+                    input.setError("Digite um número maior que zero");
+                    return;
+                }
+
+                // Tudo ok → abre a próxima activity
+                intent.putExtra("time_seconds", tempo);
+                startActivity(intent);
+
+                dialog.dismiss();
+                tempoT.set(tempo);
+            });
+        });
+
+        dialog.show();
+//        return (tempoT.get());
+    }
+
+    private void askMistakesNumberDialog(Intent intent){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Max mistakes");
+        builder.setMessage("set maximum number of mistakes");
+
+        View dialogView = getLayoutInflater()
+                .inflate(R.layout.mistakes_setter_layout, null);
+
+        builder.setView(dialogView);
+
+
+        builder.setCancelable(false); // impede fechar sem escolher
+
+        builder.setPositiveButton("OK", null); // vamos sobrescrever depois
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(dialog1 -> {
+            Button btnok = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            btnok.setOnClickListener(v -> {
+                EditText input = dialogView.findViewById(R.id.ET_lives);
+                String texto = input.getText().toString();
+
+                RadioGroup group = dialogView.findViewById(R.id.radioGroupLives);
+                int lifes;
+
+                if (texto.isEmpty()) {
+                    RadioButton btn = findViewById(group.getCheckedRadioButtonId());
+
+                    lifes = Integer.valueOf(btn.getTag().toString());
+//                    input.setError("Digite um valor");
+//                    return;
+                }
+                group.clearCheck();
+
+                try {
+                    lifes = Integer.parseInt(texto);
+                } catch (NumberFormatException e) {
+                    input.setError("Valor inválido");
+                    return;
+                }
+
+                if (lifes <= 0) {
+                    input.setError("Digite um número maior que zero");
+                    return;
+                }
+
+                // Tudo ok → abre a próxima activity
+                intent.putExtra("lives_number", lifes);
+                startActivity(intent);
+
+                dialog.dismiss();
+            });
+        });
+        dialog.show();
+
+
+    }
+
 }

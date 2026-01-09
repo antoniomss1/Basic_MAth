@@ -1,16 +1,21 @@
 package com.example.basicmath.activities;
 
 
+import static android.view.View.GONE;
+import static com.example.basicmath.models.Mode.TIMED;
 import static com.example.basicmath.utils.ProblemUtils.checkAnswer;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
@@ -18,13 +23,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.preference.PreferenceManager;
 
 import com.example.basicmath.R;
 import com.example.basicmath.environment.Settings;
-import com.example.basicmath.environment.SettingsPreferences;
+import com.example.basicmath.models.Operation;
 import com.example.basicmath.models.Problem;
 import com.example.basicmath.models.Mode;
 import com.example.basicmath.utils.ProblemGenerator;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 public class typePracticeActivity extends AppCompatActivity {
 
@@ -33,10 +43,11 @@ public class typePracticeActivity extends AppCompatActivity {
     public String string;
 
     private TextView TVcounterWrongs, TVcounterRight, TVavarageTime;
+    private TextView TVTimeLimit;
 
     private int count=0;
 
-    int a, b, chooser, btnCounter=0;
+    int a, b;
     char operation;
     int rigthAnswers = 0, wrongAnsers = 0;
     long startTime, endTime;
@@ -44,13 +55,13 @@ public class typePracticeActivity extends AppCompatActivity {
     int denominator=0;
     private int ans;
 
-    //trocar esses "mode" por algo mais geral
-    private Boolean hardMode;
-    private Boolean percentageMode;
     private Mode mode;
-    private SettingsPreferences settingsPreferences;
     private Settings settings;
     Problem currentProblem = new Problem();
+    private int lifes;
+    int startMultiplication;
+    int endMultiplication;
+    ArrayList<Operation> activeOperations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,40 +76,116 @@ public class typePracticeActivity extends AppCompatActivity {
 
         chalange = findViewById(R.id.textView);
         answerTEXT = findViewById(R.id.textViewAnswer);
-
         TVavarageTime = findViewById(R.id.textViewAvarageTime);
-
-
         TVcounterWrongs = findViewById(R.id.textViewWrongAnswers);
         TVcounterRight = findViewById(R.id.textViewRightAnswers);
 
-        settingsPreferences = new SettingsPreferences(this);
-//        System.out.println("VAI PEGAR SETTINGS");
-        settings = settingsPreferences.getSettings();
-//        System.out.println("PEGOU SETTINGS: "+ settings.toString());
-        applySettings(settings);
+        //ViewModel
+        String sTT = PreferenceManager.getDefaultSharedPreferences(this).getString("table_start","1");
+        String eTT = PreferenceManager.getDefaultSharedPreferences(this).getString("table_end","10");
 
-    }
+        //getting default settings
+        startMultiplication = Integer.parseInt(sTT);
+        endMultiplication   = Integer.parseInt(eTT);
+        activeOperations = new ArrayList<>();
+        activeOperations = getActiveOperations();
 
-    private void applySettings(Settings settings) {
-        System.out.println("APLICANDO SEETINGS");
+        settings = new Settings(activeOperations, startMultiplication, endMultiplication);
+        this.mode = Mode.NORMAL;
 
-        if(settings == null){
-            System.out.println("era null");
-            Settings s = new Settings(Mode.TIMES_TABLE, 1, 10);
-            settingsPreferences = new SettingsPreferences(this);
-            settingsPreferences.saveSettings(s);
-            this.settings = settingsPreferences.getSettings();
-            settings = this.settings;
-            System.out.println("setttings: "+settings.toString());
+
+
+
+        int timeSecs = getIntent().getIntExtra("time_seconds", 0);
+        lifes = getIntent().getIntExtra("lives_number", 0);
+
+        long timeMilliseconds = timeSecs * 1000L;
+        if(timeMilliseconds != 0){
+            this.mode = TIMED;
+            findViewById(R.id.buttonReset).setVisibility(GONE);
+            TVTimeLimit = TVavarageTime;
+            new CountDownTimer(timeMilliseconds, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    // Used for formatting digit to be in 2 digits only
+                    NumberFormat f = new DecimalFormat("00");
+                    long hour = (millisUntilFinished / 3600000) % 24;
+                    long min = (millisUntilFinished / 60000) % 60;
+                    long sec = (millisUntilFinished / 1000) % 60;
+                    TVTimeLimit.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                }
+                // When the task is over it will print 00:00:00 there
+                public void onFinish() {
+                    TVTimeLimit.setText("00:00:00");
+                    Toast.makeText(typePracticeActivity.this, "Tempo acabou!!!", Toast.LENGTH_SHORT).show();
+                    endSection(null);
+                }
+            }.start();
         }
-        System.out.println("settings: "+settings.toString());
 
-        this.mode = settings.getMode();
-
-        System.out.println("mode: "+mode);
-        System.out.println("SETOU CHECKEDS");
+        if(lifes != 0){
+            this.mode = Mode.SURVIVAL;
+            findViewById(R.id.buttonReset).setVisibility(GONE);
+            String newText = "❤\uFE0F "+(lifes - wrongAnsers);
+            TVcounterWrongs.setText(newText);
+        }
     }
+
+    private ArrayList<Operation> getActiveOperations() {
+        ArrayList<Operation> activeModes = new ArrayList<>();
+        Boolean b;
+
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_times_table",true)){
+            activeModes.add(Operation.MULTIPLICATION);
+        }
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_division",false)){
+            activeModes.add(Operation.DIVISION);
+        }
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_percentage",false)){
+            activeModes.add(Operation.PERCENTAGE);
+        }
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_addition",false)){
+            activeModes.add(Operation.ADDITION);
+        }
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("mode_subtraction",false)){
+            activeModes.add(Operation.SUBTRACTION);
+        }
+
+        return  activeModes;
+    }
+
+
+//    private void applySettings(Settings settings) {
+//        System.out.println("APLICANDO SEETINGS");
+//
+//        if(settings == null){
+//            System.out.println("era null");
+//
+//            Settings s = new Settings(Mode.TIMES_TABLE, 1, 10);
+//
+//            settingsPreferences = new SettingsPreferences(this);
+//            settingsPreferences.saveSettings(s);
+//            this.settings = settingsPreferences.getSettings();
+//            settings = this.settings;
+//            System.out.println("settings: "+settings.toString());
+//        }
+//        System.out.println("settings: "+settings.toString());
+//
+//        this.mode = settings.getModes();
+//
+//        System.out.println("mode: "+mode);
+//        System.out.println("SETOU CHECKEDS");
+//
+//    }
+//    private void applySettings(Settings settings) {
+//        if (settings == null) {
+//            Settings s = new Settings(Mode.TIMES_TABLE, 1, 10);
+//            settingsPreferences.saveSettings(s);
+//            this.settings = settingsPreferences.getSettings();
+//        } else {
+//            this.settings = settings;
+//        }
+//    }
+
 
     public void reset(View v){
         timeSum=0;
@@ -190,11 +277,26 @@ public class typePracticeActivity extends AppCompatActivity {
             wrongAnsers++;
             String newText = ""+wrongAnsers;
             TVcounterWrongs.setText(newText);
-            RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotate.setDuration(250);
-            rotate.setInterpolator(new LinearInterpolator());
 
-            TVcounterWrongs.startAnimation(rotate);
+            if(this.lifes != 0){
+                newText = "❤\uFE0F "+(lifes - wrongAnsers);
+                TVcounterWrongs.setText(newText);
+
+                if(this.lifes - wrongAnsers <=0){
+                    Toast.makeText(this, "Oh No! You lost All your lives! ", Toast.LENGTH_SHORT).show();
+                    endSection(null);
+                }
+                //animation
+                Animation object = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blinks);
+                TVcounterWrongs.startAnimation(object);
+
+            }else{
+                //default animation
+                RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(250);
+                rotate.setInterpolator(new LinearInterpolator());
+                TVcounterWrongs.startAnimation(rotate);
+            }
         }
     }
 
@@ -210,6 +312,7 @@ public class typePracticeActivity extends AppCompatActivity {
         System.out.println("intent:");
 
         Intent intent = new Intent(typePracticeActivity.this, historyActivity.class);
+
         intent.putExtra("precision", precision);
         intent.putExtra("avg", avg);
         intent.putExtra("quant", quantProblemas);
@@ -219,7 +322,11 @@ public class typePracticeActivity extends AppCompatActivity {
 
         System.out.println("action send");
 
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         startActivity(intent);
+        finish();
     }
 
 

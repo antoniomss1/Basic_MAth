@@ -1,6 +1,10 @@
 package com.example.basicmath.models;
 
-public class ModeInfo {
+import android.os.Bundle;
+
+import java.io.Serializable;
+
+public class ModeInfo implements Serializable {
     private String title;
     private String description;
     private String longDescription;
@@ -8,6 +12,44 @@ public class ModeInfo {
     private int iconResId;
 
     private Class<?> targetActivity;
+    private Bundle info;
+
+    private ModeConfigType configType;
+
+    public ModeConfigType getConfigType() {
+        return configType;
+    }
+
+    @Override
+    public String toString() {
+        return "ModeInfo{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", longDescription='" + longDescription + '\'' +
+                ", iconResId=" + iconResId +
+                ", targetActivity=" + targetActivity +
+                ", info=" + info  +
+                '}';
+    }
+
+    public ModeInfo(String title, String description, String longDescription, int iconResId, Class<?> targetActivity, ModeConfigType modeConfigType) {
+        this.title = title;
+        this.description = description;
+        this.longDescription = longDescription;
+        this.iconResId = iconResId;
+        this.targetActivity = targetActivity;
+        this.configType = modeConfigType;
+    }
+
+
+    public Bundle getInfo() {
+        return info;
+    }
+
+    public void setInfo(Bundle info) {
+        this.info = info;
+    }
+
     public String getLongDescription() {
         return longDescription;
     }
@@ -22,6 +64,7 @@ public class ModeInfo {
         this.longDescription = longDescription;
         this.iconResId = iconResId;
         this.targetActivity = target;
+        this.configType = ModeConfigType.NONE;
     }
 
     public String getTitle() {

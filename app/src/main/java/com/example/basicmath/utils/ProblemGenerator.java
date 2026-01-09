@@ -5,10 +5,10 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.example.basicmath.environment.Settings;
-import com.example.basicmath.models.Mode;
 import com.example.basicmath.models.Operation;
 import com.example.basicmath.models.Problem;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public final class ProblemGenerator {
@@ -17,8 +17,8 @@ public final class ProblemGenerator {
     private static int right = 10;
     public static Problem generateProblem(Operation operation, Settings settings){
         //receber dados das configurações para determinar qual metodo chamar para gerar o problema
-        left = settings.tableStart;
-        right = settings.tableEnd;
+        left = settings.multiplicationBegin;
+        right = settings.multiplicationEnd;
 
         switch (operation) {
             case ADDITION:
@@ -44,8 +44,8 @@ public final class ProblemGenerator {
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     private static Problem generateHardProblem(Settings settings){
-        left = settings.tableStart;
-        right = settings.tableEnd;
+        left = settings.multiplicationBegin;
+        right = settings.multiplicationEnd;
         Random c = new Random();
         int val = (c.nextInt(0, Integer.MAX_VALUE) % 4);
         switch (val){
@@ -67,23 +67,16 @@ public final class ProblemGenerator {
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     public static Problem newChalange(Settings settings){
 
-        Mode mode = settings.getMode();
+        ArrayList<Operation> operations = settings.getModes();
+
+        int numModes = operations.size();
         Problem problem = new Problem();
-        System.out.println("mode: "+mode);
-        switch (mode){
-            case HARD_TABLE:
-                problem = generateHardProblem(settings);
-                break;
-            case PERCENTAGE:
-                problem = generateProblem(Operation.PERCENTAGE, settings);
-                break;
-            case TIMES_TABLE:
-                problem = generateProblem(Operation.MULTIPLICATION, settings);
-                break;
-            case DIVISION:
-                problem = generateProblem(Operation.DIVISION, settings);
-                break;
-        }
+        System.out.println("mode: "+operations);
+        Random r = new Random();;
+        int sort = r.nextInt(0, numModes);
+        Operation mode = operations.get(sort);
+        problem = generateProblem(mode, settings);
+
 
         return problem;
     }

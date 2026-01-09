@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -13,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BasicMAth">
         <activity
+            android:name=".activities.SettingsActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_settings2" />
+        <activity
             android:name=".activities.timeGuessActivity"
             android:exported="false" />
         <activity
@@ -20,9 +25,6 @@
             android:exported="false" />
         <activity
             android:name=".activities.ChooseModeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.historyActivity"

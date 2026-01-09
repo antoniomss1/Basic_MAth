@@ -6,6 +6,7 @@
     <dimen name="primary_text_size">32sp</dimen>
     <dimen name="secondary_text_size">22sp</dimen>
     <dimen name="little_text">15sp</dimen>
+    <dimen name="text_size_2">18sp</dimen>
 
     <style name="AppButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/bg_button_gradient</item>
@@ -14,5 +15,22 @@
         <item name="cornerRadius">16dp</item>
         <item name="android:elevation">2dp</item>
     </style>
+
+    <string name="title_activity_settings2">SettingsActivity2</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>

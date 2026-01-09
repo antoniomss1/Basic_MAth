@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTypingMode(View v){
         Intent intent = new Intent(MainActivity.this, typePracticeActivity.class);
-
+//        intent.putExtra("time_seconds", 10);
         startActivity(intent);
     }
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enterSettings(View v){
-        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        Intent intent = new Intent(MainActivity.this, SettingsActivity2.class);
         startActivity(intent);
     }
 

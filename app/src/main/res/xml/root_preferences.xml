@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- ===== SETTINGS ===== -->
+    <PreferenceCategory
+        app:title="Settings">
+
+        <!-- Intervalo da Tabuada -->
+        <EditTextPreference
+            app:key="table_start"
+            app:title="Table Interval - From"
+            app:defaultValue="1"
+            app:useSimpleSummaryProvider="true"
+            app:dialogTitle="Table start" />
+
+        <EditTextPreference
+            app:key="table_end"
+            app:title="Table Interval - To"
+            app:defaultValue="10"
+            app:useSimpleSummaryProvider="true"
+            app:dialogTitle="Table end" />
+
+    </PreferenceCategory>
+
+    <!-- ===== MODES ===== -->
+    <PreferenceCategory
+        app:title="Active Operations">
+
+        <CheckBoxPreference
+            app:key="mode_times_table"
+            app:title="Multiplication"
+            app:defaultValue="true" />
+
+        <CheckBoxPreference
+            app:key="mode_division"
+            app:title="Division"
+            app:defaultValue="false" />
+
+        <CheckBoxPreference
+            app:key="mode_percentage"
+            app:title="Percentage"
+            app:defaultValue="false" />
+
+        <CheckBoxPreference
+            app:key="mode_addition"
+            app:title="Addition"
+            app:defaultValue="false" />
+
+        <CheckBoxPreference
+            app:key="mode_subtraction"
+            app:title="Subtraction"
+            app:defaultValue="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
