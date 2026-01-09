@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enterSettings(View v){
-        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        Intent intent = new Intent(MainActivity.this, SettingsActivity2.class);
         startActivity(intent);
     }
 
