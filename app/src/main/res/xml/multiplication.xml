@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditTextPreference
+        app:key="table_start"
+        app:title="Min value"
+        app:useSimpleSummaryProvider="true"
+        app:defaultValue="1"/>
+
+    <EditTextPreference
+        app:key="table_end"
+        app:title="Max value"
+        app:useSimpleSummaryProvider="true"
+        app:defaultValue="10"/>
+</androidx.preference.PreferenceScreen>
