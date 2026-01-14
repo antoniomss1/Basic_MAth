@@ -8,11 +8,12 @@ import java.util.ArrayList;
 public class Settings {
     public int multiplicationBegin;
     public int multiplicationEnd;
+    public Boolean base12;
     public Mode mode;
 
     private ArrayList<Operation> operations;
 
-    public Settings(Operation operation, int tableStart, int tableEnd, Mode mode) {
+    public Settings(Operation operation, int tableStart, int tableEnd, Mode mode, Boolean base12) {
 
         this.operations= new ArrayList<>();
         this.operations.add(operation);
@@ -20,6 +21,15 @@ public class Settings {
         this.multiplicationBegin = tableStart;
         this.multiplicationEnd = tableEnd;
         this.mode = mode;
+        this.base12 = base12;
+    }
+
+    public Boolean getBase12() {
+        return base12;
+    }
+
+    public void setBase12(Boolean base12) {
+        this.base12 = base12;
     }
 
     public Mode getMode() {
@@ -30,13 +40,14 @@ public class Settings {
         this.mode = mode;
     }
 
-    public Settings(ArrayList<Operation> modes, int tableStart, int tableEnd) {
+    public Settings(ArrayList<Operation> modes, int tableStart, int tableEnd, Boolean base12) {
 
         this.operations= new ArrayList<>();
         this.operations.addAll(modes);
 
         this.multiplicationBegin = tableStart;
         this.multiplicationEnd = tableEnd;
+        this.base12 = base12;
     }
 
     @Override

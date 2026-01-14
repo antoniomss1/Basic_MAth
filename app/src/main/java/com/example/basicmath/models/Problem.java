@@ -1,9 +1,13 @@
 package com.example.basicmath.models;
 
+import com.example.basicmath.utils.ProblemGenerator;
+
 public class Problem {
     private int leftTerm;
     private int rightTerm;
     private Operation operation;
+
+    private int answer;
 
     public Problem(int leftTerm, int rightTerm, Operation operation, int answer) {
         this.leftTerm = leftTerm;
@@ -17,14 +21,15 @@ public class Problem {
     public Operation getOperation() {
         return operation;
     }
-
     public void setOperation(Operation operation) {
         this.operation = operation;
     }
-    private int answer;
 
     public int getAnswer() {
         return answer;
+    }
+    public String getBase12Answer(){
+        return ProblemGenerator.convertToBaseTwelve(answer);
     }
 
     public void setAnswer(int answer) {
@@ -64,6 +69,32 @@ public class Problem {
                 break;
             case DIVISION:
                 string = this.leftTerm+" / "+this.rightTerm +" =";
+                break;
+            default:
+                return "there is some error";
+        }
+        return string;
+    }
+
+    public String getBase12String(){
+        String string;
+        String left = ProblemGenerator.convertToBaseTwelve(this.leftTerm);
+        String right = ProblemGenerator.convertToBaseTwelve(this.rightTerm);
+        switch (this.operation){
+            case ADDITION:
+                string = left+" + "+right +" =";
+                break;
+            case PERCENTAGE:
+                string = left+"% de "+right +" =";
+                break;
+            case SUBTRACTION:
+                string = left+" - "+right +" =";
+                break;
+            case MULTIPLICATION:
+                string = left+" x "+right +" =";
+                break;
+            case DIVISION:
+                string = left+" / "+right +" =";
                 break;
             default:
                 return "there is some error";
