@@ -58,7 +58,7 @@ public class zenMode extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(count % 2 == 0){
-                    problem = newChalange(settings);
+                    problem = newChalange(settings, zenMode.this);
                     a = problem.getLeftTerm();
                     b = problem.getRightTerm();
                     string = a + " " + problem.getOldSystemOperation() + " " + b;
@@ -80,8 +80,10 @@ public class zenMode extends AppCompatActivity {
         endMultiplication   = Integer.parseInt(eTT);
         activeOperations = new ArrayList<>();
         activeOperations = getActiveOperations();
+        Boolean base = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("base_12",false);
 
-        settings = new Settings(activeOperations, startMultiplication, endMultiplication);
+
+        settings = new Settings(activeOperations, startMultiplication, endMultiplication, base);
     }
 
 

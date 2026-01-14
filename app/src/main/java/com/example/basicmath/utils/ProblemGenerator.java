@@ -1,8 +1,11 @@
 package com.example.basicmath.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+import androidx.preference.PreferenceManager;
 
 import com.example.basicmath.environment.Settings;
 import com.example.basicmath.models.Operation;
@@ -15,26 +18,26 @@ public final class ProblemGenerator {
     private int difficulty;
     private static int left = 0;
     private static int right = 10;
-    public static Problem generateProblem(Operation operation, Settings settings){
+    public static Problem generateProblem(Operation operation, Settings settings, Context context){
         //receber dados das configurações para determinar qual metodo chamar para gerar o problema
         left = settings.multiplicationBegin;
         right = settings.multiplicationEnd;
 
         switch (operation) {
             case ADDITION:
-                return generateAdditionProblem(left, right);
+                return generateAdditionProblem(context);
 
             case MULTIPLICATION:
-                return generateMultiplicationProblem(left, right);
+                return generateMultiplicationProblem(context);
 
             case SUBTRACTION:
-                return generateSubtractionProblem(left, right);
+                return generateSubtractionProblem(context);
 
             case PERCENTAGE:
-                return generatePercentageProblem(left, right);
+                return generatePercentageProblem(context);
 
             case DIVISION:
-                return generateIntDivisionProblem(left, right);
+                return generateIntDivisionProblem(context);
             default:
 //                throw new IllegalArgumentException("Unsupported operation: " + operation);
                 System.out.println("OPERAÇÃO DESCONHECIDA (OU NÃO IMPLEMENTADA): "+operation.toString());
@@ -43,20 +46,18 @@ public final class ProblemGenerator {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    private static Problem generateHardProblem(Settings settings){
-        left = settings.multiplicationBegin;
-        right = settings.multiplicationEnd;
-        Random c = new Random();
-        int val = (c.nextInt(0, Integer.MAX_VALUE) % 4);
+    private static Problem generateHardProblem(Context c){
+        Random d = new Random();
+        int val = (d.nextInt(0, Integer.MAX_VALUE) % 4);
         switch (val){
             case (0):
-                return generateAdditionProblem(left, right*2);
+                return generateAdditionProblem(c);
             case (1):
-                return generateMultiplicationProblem(left, right);
+                return generateMultiplicationProblem(c);
             case (2):
-                return generateSubtractionProblem(left, right);
+                return generateSubtractionProblem(c);
             case (3):
-                return generateIntDivisionProblem(left, right);
+                return generateIntDivisionProblem(c);
             default:
                 System.out.println("val = " + val);
         }
@@ -65,7 +66,7 @@ public final class ProblemGenerator {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    public static Problem newChalange(Settings settings){
+    public static Problem newChalange(Settings settings, Context context){
 
         ArrayList<Operation> operations = settings.getModes();
 
@@ -75,13 +76,23 @@ public final class ProblemGenerator {
         Random r = new Random();;
         int sort = r.nextInt(0, numModes);
         Operation mode = operations.get(sort);
-        problem = generateProblem(mode, settings);
+        problem = generateProblem(mode, settings, context);
 
 
         return problem;
     }
     //Sometimes problems might be preselected...
-    private static Problem generateAdditionProblem(int left, int right ){
+    private static Problem generateAdditionProblem(Context context ){
+
+
+        int left = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("addition_start", "1")
+        );
+        int right = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("addition_end", "10")
+        );
 
         Random random = new Random();
         int range = right - left;
@@ -94,7 +105,20 @@ public final class ProblemGenerator {
         Problem problem = new Problem(a, b, Operation.ADDITION, ans);
         return problem;
     }
-    private static Problem generateMultiplicationProblem(int left, int right){
+    private static Problem generateMultiplicationProblem(Context context) {
+
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(context);
+
+        int left = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("table_start", "1")
+        );
+        int right = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("table_end", "10")
+        );
+
         Random random = new Random();
         int range = right - left;
         int a = random.nextInt(range);
@@ -107,7 +131,20 @@ public final class ProblemGenerator {
         System.out.println("problema gerado: "+problem.toString());
         return problem;
     }
-    private static Problem generateSubtractionProblem(int left, int right ){
+    private static Problem generateSubtractionProblem(Context context) {
+
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(context);
+
+        int left = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("subtraction_start", "1")
+        );
+        int right = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("subtraction_end", "10")
+        );
+
         Random random = new Random();
         int range = right - left;
         int a = random.nextInt(range);
@@ -127,9 +164,19 @@ public final class ProblemGenerator {
         Problem problem = new Problem(a, b, Operation.SUBTRACTION, ans);
         return problem;
     }
-    private static Problem generatePercentageProblem(int left, int right ){
+    private static Problem generatePercentageProblem(Context context) {
+
+        int left = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("percentage_start", "1")
+        );
+        int right = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("percentage_end", "200")
+        );
+
         Random random = new Random();
-        int range = 200;//o limite para os problemas de porcentagem podem ser bem diferentes
+        int range = right-left;//o limite para os problemas de porcentagem podem ser bem diferentes
         //inserir configuração no SettingsActivity
         float a = random.nextInt(range);
         float b = random.nextInt(100);
@@ -141,12 +188,22 @@ public final class ProblemGenerator {
         return problem;
     }
 
-    private static Problem generateIntDivisionProblem(int left, int right){
+    private static Problem generateIntDivisionProblem(Context context) {
+
+        int left = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("division_start", "1")
+        );
+        int right = Integer.parseInt(
+                PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("division_end", "10")
+        );
+
         Random random = new Random();
-        int range = right*10;
-        int a = random.nextInt(range);
-        int b = random.nextInt(19);
-        a++; b++;
+
+        int a = random.nextInt(right);
+        int b = random.nextInt(right);
+
         a += left;
         b += left;
         if (a>b){
@@ -158,6 +215,38 @@ public final class ProblemGenerator {
         int ans = (b/a);
         Problem problem = new Problem(b, a, Operation.DIVISION, ans);
         return problem;
+    }
+
+    public static String convertToBaseTwelve(int val){
+        Character dek   = 'X';
+        Character el    = 'Ɛ';
+
+        String number = "";
+        int v = val;
+        int last = v%12;
+        number = number + last;
+
+        while (v != 0){
+
+            v = v/12;
+            last = v%12;
+            if(last ==10){
+                number = number + dek;
+            } else if (last==11) {
+                number = number + el;
+            }
+            else{
+                number = number + last;
+            }
+
+        }
+        number = number + v;
+
+        StringBuilder res = new StringBuilder();
+        res.append(number);
+        res.reverse();
+
+        return res.toString();
     }
 
 }

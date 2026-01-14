@@ -90,10 +90,8 @@ public class typePracticeActivity extends AppCompatActivity {
         activeOperations = new ArrayList<>();
         activeOperations = getActiveOperations();
 
-        settings = new Settings(activeOperations, startMultiplication, endMultiplication);
+        settings = new Settings(activeOperations, startMultiplication, endMultiplication, true);
         this.mode = Mode.NORMAL;
-
-
 
 
         int timeSecs = getIntent().getIntExtra("time_seconds", 0);
@@ -152,41 +150,6 @@ public class typePracticeActivity extends AppCompatActivity {
 
         return  activeModes;
     }
-
-
-//    private void applySettings(Settings settings) {
-//        System.out.println("APLICANDO SEETINGS");
-//
-//        if(settings == null){
-//            System.out.println("era null");
-//
-//            Settings s = new Settings(Mode.TIMES_TABLE, 1, 10);
-//
-//            settingsPreferences = new SettingsPreferences(this);
-//            settingsPreferences.saveSettings(s);
-//            this.settings = settingsPreferences.getSettings();
-//            settings = this.settings;
-//            System.out.println("settings: "+settings.toString());
-//        }
-//        System.out.println("settings: "+settings.toString());
-//
-//        this.mode = settings.getModes();
-//
-//        System.out.println("mode: "+mode);
-//        System.out.println("SETOU CHECKEDS");
-//
-//    }
-//    private void applySettings(Settings settings) {
-//        if (settings == null) {
-//            Settings s = new Settings(Mode.TIMES_TABLE, 1, 10);
-//            settingsPreferences.saveSettings(s);
-//            this.settings = settingsPreferences.getSettings();
-//        } else {
-//            this.settings = settings;
-//        }
-//    }
-
-
     public void reset(View v){
         timeSum=0;
         denominator=0;
@@ -220,7 +183,7 @@ public class typePracticeActivity extends AppCompatActivity {
         numberClicked(text);
         if(checkAnswer(currentProblem, answerTEXT)) {
 
-            currentProblem = ProblemGenerator.newChalange(settings);
+            currentProblem = ProblemGenerator.newChalange(settings, this);
             a = currentProblem.getLeftTerm();
             b = currentProblem.getRightTerm();
             string = currentProblem.getString();
@@ -340,7 +303,7 @@ public class typePracticeActivity extends AppCompatActivity {
         if(chalange.getText().equals("")==false) return;
 
         System.out.println("VAI CRIAR NOVO PROBLEMA");
-        currentProblem = ProblemGenerator.newChalange(settings);
+        currentProblem = ProblemGenerator.newChalange(settings, this);
         System.out.println("CRIOU: "+ currentProblem.toString());
         a = currentProblem.getLeftTerm();
         b = currentProblem.getRightTerm();
